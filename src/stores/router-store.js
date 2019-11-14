@@ -14,7 +14,7 @@ Page({
 	hashbang: true
 })
 
-Page('/', () => Page('/-/tasks/TES/'))
+Page('/', () => Page('/-/tasks/SLI/'))
 
 Page('/:team/', data => 
 	routerStore.set({

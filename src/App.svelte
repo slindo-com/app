@@ -6,6 +6,7 @@
 	import { tasksStoreInit } from './stores/tasks-store.js'
 	import { userStoreInit } from './stores/user-store.js'
 	import { teamStore, teamStoreInit } from './stores/team-store.js'
+	import { projectsStoreInit } from './stores/projects-store.js'
 	import { reportsStoreInit } from './stores/reports-store.js'
 	import { uiStore, uiStoreInit, uiStoreSetBreakpoint } from './stores/ui-store.js'
 	import { getWindowWidth } from './helpers/helpers.js'
@@ -32,14 +33,6 @@
 	}
 
 const MODELS = {
-	'teams': {
-		col: 'teams',
-		attributes: {
-			title: '',
-			members: {}
-		},
-		indexes: []
-	}, 
 	'settings': {
 		col: 'settings',
 		attributes: {
@@ -48,6 +41,27 @@ const MODELS = {
 			stopwatchStartTime: 0,
 		},
 		indexes: []
+	}, 
+	'teams': {
+		col: 'teams',
+		attributes: {
+			title: '',
+			members: {}
+		},
+		indexes: []
+	}, 
+	'projects': {
+		col: 'projects',
+		attributes: {
+			code: 'AAA',
+			title: '',
+			color: '#333',
+			user: null,
+			team: null
+		},
+		indexes: [
+			['team']
+		]
 	}, 
 	'times': {
 		col: 'times',
@@ -68,16 +82,23 @@ const MODELS = {
 	'tasks': {
 		col: 'tasks',
 		attributes: {
+			number: null,
 			title: '',
+			description: '',
 			project: null,
-			color: '#333',
-			archived: false,
+			status: null,
+			responsible: null,
+			labels: [],
+			priority: null,
+			due: null,
 			user: null,
 			team: null
 		},
 		indexes: [
+			['number'],
 			['team'],
-			['project', 'team']
+			['team', 'project'],
+			['team', 'project', 'user']
 		]
 	}
 }
@@ -97,6 +118,7 @@ const MODELS = {
 		tasksStoreInit()
 		userStoreInit()
 		teamStoreInit()
+		projectsStoreInit()
 		reportsStoreInit()
 	})
 
