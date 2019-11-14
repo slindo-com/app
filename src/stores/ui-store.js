@@ -5,9 +5,10 @@ import { userStore, userStopwatchStore } from '../stores/user-store.js'
 
 
 const TITLE_MAP = {
+	'tasks': 'Tasks',
 	'timelog': 'Timelog',
 	'reports': 'Reports',
-	'settings': 'Settings',
+	'settings': 'Settings'
 }
 
 let view = '',
@@ -85,5 +86,5 @@ routerStore.subscribe(routerData => {
 function setTitle(view, hours, minutes) {
 	divider = divider === ':' ? ' ' : ':'
 	const stopwatchTitle = (get(userStore).stopwatchEntryId) ? '['+ hours + divider + minutes +'] ' : ''
-	document.title = stopwatchTitle + TITLE_MAP[view] +' · Timetracker.One'
+	document.title = stopwatchTitle + TITLE_MAP[view] +' · Slindo'
 }
