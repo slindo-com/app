@@ -26,7 +26,7 @@
 	}
 
 	.wide {
-		width:calc(100% - 354px);
+		width:calc(100% - 372px);
 	}
 
 
