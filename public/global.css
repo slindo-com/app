@@ -1,0 +1,201 @@
+@font-face {
+    font-family: 'overpass';
+    src: url('/fonts/overpass/overpass-regular-webfont.woff2') format('woff2'),
+         url('/fonts/overpass/overpass-regular-webfont.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'overpass';
+    src: url('/fonts/overpass/overpass-italic-webfont.woff2') format('woff2'),
+         url('/fonts/overpass/overpass-italic-webfont.woff') format('woff');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'overpass';
+    src: url('/fonts/overpass/overpass-semibold-webfont.woff2') format('woff2'),
+         url('/fonts/overpass/overpass-semibold-webfont.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'overpass';
+    src: url('/fonts/overpass/overpass-semibold-italic-webfont.woff2') format('woff2'),
+         url('/fonts/overpass/overpass-semibold-italic-webfont.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'overpass';
+    src: url('/fonts/overpass/overpass-bold-italic-webfont.woff2') format('woff2'),
+         url('/fonts/overpass/overpass-bold-italic-webfont.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'overpass';
+    src: url('/fonts/overpass/overpass-bold-webfont.woff2') format('woff2'),
+         url('/fonts/overpass/overpass-bold-webfont.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+
+
+html, body {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+html {
+
+    --c-font:#2A2722;
+    --c-blue:#4759B3;
+
+    --border-radius: 4px;
+
+    --c-darkgrey: #26231E;
+    --c-middlegrey: #66625C;
+    --c-grey: #CCC9C4;
+    /* --c-blue: #477DB3; */
+    --c-background: #FFF;
+    --c-background-light: #FAF9F7;
+    --c-hover-grey: #F5F3F0;
+    --c-greyed-out: #99938A;
+
+    --shadow-overlay: 0 4px 0 -2px rgba(0, 0, 0, .05), 0 3px 6px rgba(0, 0, 0, .1);
+    --shadow-box: 0 1px 1px rgba(0, 0, 0, .05), 0 2px 3px rgba(0, 0, 0, .1);
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family:overpass, sans-serif;
+	background:var(--c-background);
+    color:var(--c-darkgrey);
+}
+
+*, *:before, *:after {
+	box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+    outline:none;
+}
+
+a {
+	color: var(--c-blue);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:visited {
+	
+}
+
+label {
+	display: block;
+}
+
+input, button, select, textarea {
+	font-family: inherit;
+	font-size: inherit;
+	padding: 0.4em;
+	margin: 0 0 0.5em 0;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+}
+
+input:disabled {
+	color: #ccc;
+}
+
+input[type="range"] {
+	height: 0;
+}
+
+
+h2 {
+    font-size: 18px;
+    line-height: 30px;
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+    color:var(--c-font);
+}
+
+@media (min-width: 800px) {
+    h2 {
+        font-size: 25px;
+    }
+}
+
+p {
+    font-size:16.5px;
+    line-height:30px;
+    padding:0;
+    margin:0;
+}
+
+p a {
+    text-decoration: underline;
+    outline:none;
+}
+
+p a:hover, p a:focus {
+    text-decoration: none;
+}
+
+small {
+    font-size:12px;
+    line-height:18px;
+    padding:0;
+    margin:0;
+}
+
+
+
+
+.container {
+    position: relative;
+    max-width:540px;
+    margin:0 auto;
+    border-radius: var(--border-radius);
+    background:#FFF;
+    padding:0;
+    box-shadow: 0 -3px 0 #DDDAD5 inset, -2px 0 0 #F5F5F4 inset; 
+}
+
+.container:after {
+    content:'';
+    display: block;
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border-radius:var(--border-radius);
+    border:#CCC 1px solid;
+    pointer-events: none;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+    .container:after {
+        width:200%;
+        height:200%;
+        border-radius:8px;
+        border:#999 1px solid;
+        transform: scale(.5);
+        transform-origin: 0 0;
+    }
+}
