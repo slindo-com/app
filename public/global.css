@@ -199,3 +199,26 @@ small {
         transform-origin: 0 0;
     }
 }
+
+
+.border-bottom {
+    position: relative;
+}
+
+.border-bottom:after {
+    content:'';
+    position: absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height: 1px;
+    background:#CCC;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+    .border-bottom:after {
+        background:#CCC;
+        transform:scale(1, 0.5);
+        transform-origin: 0 100%;
+    }
+}

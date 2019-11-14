@@ -1,4 +1,5 @@
 import { writable, get } from 'svelte/store';
+import { routerStore } from '../stores/router-store.js'
 import { authStore } from '../stores/auth-store.js'
 import { teamStore } from '../stores/team-store.js'
 import { sws } from '../helpers/sws-client.js'
@@ -14,13 +15,21 @@ let listenerMember,
 	invitationListener,
 	interval,
 
-	teamId
+	teamId,
+	projectCode
 
 export function projectsStoreInit() {
 	teamStore.subscribe(teamData => {
 		if(teamData.active && teamData.active.id != teamId) {
 			teamId = teamData.active.id
 			setListener(teamId)
+		}
+	})
+
+	routerStore.subscribe(routerData => {
+		if(routerData.project && routerData.project != projectCode) {
+			projectCode = routerData.project
+			setActiveProject()
 		}
 	})
 }
@@ -39,6 +48,8 @@ function setListener(teamId) {
 				data.projects = res
 				return data
 			})
+
+			setActiveProject()
 		})
 
 		sws.db.hook({
@@ -69,7 +80,23 @@ function setListener(teamId) {
 
 					return data
 				})
+
+				setActiveProject()
 			}
+		})
+	}
+}
+
+
+function setActiveProject() {
+
+	const projectsData = get(projectsStore),
+		newActiveProject = projectsData.projects.find(val => val.code === projectCode)
+
+	if(JSON.stringify(newActiveProject) != JSON.stringify(projectsData.active)) {
+		projectsStore.update(data => {
+			data.active = newActiveProject
+			return data
 		})
 	}
 }

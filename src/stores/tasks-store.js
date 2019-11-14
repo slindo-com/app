@@ -17,53 +17,45 @@ let listener,
 
 export function tasksStoreInit() {
 	teamStore.subscribe(teamData => {
-		const routerData = get(routerStore)
-		try {
-			if(teamData.active && teamData.active.id != teamId) {
-				teamId = teamData.active.id
-				setListener(teamId)
-			}
-		} catch(err) {}		
+		if(teamData.active && teamData.active.id != teamId) {
+			teamId = teamData.active.id
+			setListener(teamId)
+		}
 	})
+
+	// TODO: Project Tasks
 }
 
 
 function setListener(teamId) {
 
-	console.log(teamId)
-
-	/*const authData = get(authStore)
-
 	if(teamId) {
-
 		sws.db.query({
-			col: 'times',
+			col: 'tasks',
 			query: {
-				day: dbDate,
 				team: teamId
 			}
 		}).then(res => {
 			tasksStore.update(data => {
-				data.times = res.filter(entry => entry.user === authData.user.id)
+				data.tasks = res
 				return data
 			})
 		})
 
 		sws.db.hook({
-			hook: 'times',
-			col: 'times',
+			hook: 'tasksStore',
+			col: 'tasks',
 			query: {
-				day: dbDate,
 				team: teamId
 			},
 			fn: obj => {
 				tasksStore.update(data => {
 
 					if(obj.__deleted) {
-						data.times = data.times.filter(val => val.id != obj.id)
+						data.tasks = data.tasks.filter(val => val.id != obj.id)
 					} else {
 						let found = false
-						data.times = data.times.map(val => {
+						data.tasks = data.tasks.map(val => {
 							if(val.id === obj.id) {
 								found = true
 								return obj
@@ -72,7 +64,7 @@ function setListener(teamId) {
 						})
 
 						if(!found) {
-							data.times.push(obj)
+							data.tasks.push(obj)
 						}
 					}
 
@@ -80,77 +72,20 @@ function setListener(teamId) {
 				})
 			}
 		})
-	}*/
+	}
 }
 
 
-export function tasksStoreNewTime(day, cb) {
+export async function tasksStoreNewTask(project) {
 
 	const { user } = get(authStore)
 
-	sws.db.new({
-		col: 'times',
+	return sws.db.new({
+		col: 'tasks',
 		data: {
 			user: user.id,
 			team: teamId,
-			day: day,
+			project
 		}
-	}).then(() => {
-		cb(true)
-	}).catch(err => {
-		cb(false)
-	})
-}
-
-
-export function tasksStoreGetEntry(id, cb) {
-	sws.db.get({
-		col: 'times',
-		id
-	}).then(obj => {
-		cb(obj)
-	}).catch(err => {
-		cb(null)
-	})
-}
-
-
-export function tasksStoreChangeComment(id, comment) {
-	sws.db.update({
-		col: 'times',
-		id,
-		data: {
-			comment
-		}
-	})
-}
-
-
-export function tasksStoreChangeDuration(id, duration) {
-	sws.db.update({
-		col: 'times',
-		id,
-		data: {
-			duration
-		}
-	})
-}
-
-
-export function tasksStoreChangeTask(id, task) {
-	sws.db.update({
-		col: 'times',
-		id,
-		data: {
-			task
-		}
-	})
-}
-
-
-export function tasksStoreDeleteEntry(id) {
-	sws.db.delete({
-		col: 'times',
-		id
 	})
 }
