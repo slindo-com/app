@@ -1,12 +1,13 @@
 <script>
 	import { routerStore } from '../stores/router-store.js'
 	import { projectsStore } from '../stores/projects-store.js'
-	import { tasksStore, tasksStoreNewTask } from '../stores/tasks-store.js'
+	import { tasksStore, tasksStoreNewTask, tasksStoreChangeTitle } from '../stores/tasks-store.js'
 
 	import UiButton from '../ui/ui-button.svelte'
 	import UiViewNav from '../ui/ui-view-nav.svelte'
 	import UiViewSection from '../ui/ui-view-section.svelte'
 	import UiDetailSection from '../ui/ui-detail-section.svelte'
+	import UiDetailInput from '../ui/ui-detail-input.svelte'
 
 
 	const LINKS = [{
@@ -38,13 +39,37 @@
 			<a
 				href="/{$routerStore.team}/{$routerStore.view}/{$routerStore.project}/{$routerStore.subview}/{task.id}/"
 				class="entry border-bottom">
-				Task
+				{task.title ? task.title : 'No task summary'}
 			</a>
 		{/each}
 
 	</UiViewSection>
 	<UiDetailSection wide>
-		Detail
+
+		{#if $tasksStore.detailTask}
+			<div class="padding">
+			<form on:submit|preventDefault={e => tasksStoreChangeTitle($tasksStore.detailTask.id, e.srcElement[0].value)}>
+				
+				<div class="input-wrapper">
+					<UiDetailInput
+						label="Summary"
+						type="text"
+						value={$tasksStore.detailTask.title}
+						error=""
+						transparent
+					/>
+				</div>
+				<div class="input-wrapper">
+					<UiDetailInput
+						label="Description"
+						type="text"
+						value={$tasksStore.detailTask.description}
+						error=""
+					/>
+				</div>
+			</form>
+			</div>
+		{/if}
 	</UiDetailSection>
 
 <style>
@@ -77,5 +102,13 @@
 	.entry:hover {
 		text-decoration: none;
 		background:#FAFAFA;
+	}
+
+	.padding {
+		padding:36px;
+	}
+
+	.input-wrapper {
+		margin-bottom:18px;
 	}
 </style>

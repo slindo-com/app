@@ -7,12 +7,13 @@ import { dateToDatabaseDate, dateStringToDate } from '../helpers/helpers.js'
 
 export const tasksStore = writable({
 	tasks: [],
-	dayIndex: {}
+	detailTask: null
 })
 
 
 let listener,
-	teamId = null
+	teamId = null,
+	detailId = null
 
 
 export function tasksStoreInit() {
@@ -20,6 +21,14 @@ export function tasksStoreInit() {
 		if(teamData.active && teamData.active.id != teamId) {
 			teamId = teamData.active.id
 			setListener(teamId)
+		}
+	})
+
+	routerStore.subscribe(routerData => {
+		console.log(routerData)
+		if(routerData.view === 'tasks' && routerData.detail && routerData.detail != detailId) {
+			detailId = routerData.detail
+			setDetailTask()
 		}
 	})
 
@@ -40,6 +49,8 @@ function setListener(teamId) {
 				data.tasks = res
 				return data
 			})
+
+			setDetailTask()
 		})
 
 		sws.db.hook({
@@ -69,10 +80,26 @@ function setListener(teamId) {
 					}
 
 					return data
+
+					setDetailTask()
 				})
 			}
 		})
 	}
+}
+
+
+function setDetailTask() {
+	const { tasks } = get(tasksStore)
+
+	const detailTask = tasks.find(val => val.id === detailId)
+
+	console.log(detailId, tasks, detailTask)
+
+	tasksStore.update(data => {
+		data.detailTask = detailTask
+		return data
+	})
 }
 
 
@@ -86,6 +113,17 @@ export async function tasksStoreNewTask(project) {
 			user: user.id,
 			team: teamId,
 			project
+		}
+	})
+}
+
+
+export function tasksStoreChangeTitle(id, title) {
+	sws.db.update({
+		col: 'tasks',
+		id,
+		data: {
+			title
 		}
 	})
 }
