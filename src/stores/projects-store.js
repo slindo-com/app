@@ -117,13 +117,6 @@ export function projectsStoreNewProject() {
 
 
 export function projectsStoreChangeTitle(id, title) {
-	console.log({
-		col: 'projects',
-		id,
-		data: {
-			title
-		}
-	})
 	sws.db.update({
 		col: 'projects',
 		id,
