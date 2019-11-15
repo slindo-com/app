@@ -86,7 +86,7 @@
 	{/if}
 
 	{#if focused}
-		<div class="shadow">t</div>
+		<div class="shadow"></div>
 	{/if}
 
 </div>
