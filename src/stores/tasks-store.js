@@ -127,3 +127,34 @@ export function tasksStoreChangeTitle(id, title) {
 		}
 	})
 }
+
+export function tasksStoreChangeDescription(id, description) {
+	sws.db.update({
+		col: 'tasks',
+		id,
+		data: {
+			description
+		}
+	})
+}
+
+export function tasksStoreChangeStatus(id, status) {
+	sws.db.update({
+		col: 'tasks',
+		id,
+		data: {
+			status
+		}
+	})
+}
+
+export function tasksStoreChangePriority(id, priority) {
+	sws.db.update({
+		col: 'tasks',
+		id,
+		data: {
+			priority
+		}
+	})
+}
+

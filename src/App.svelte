@@ -161,6 +161,6 @@ const COLORS = [
 
 {/if}
 
-<UiFocus />
+<!-- <UiFocus /> -->
 
 <svelte:window on:resize={e => resize()} />
