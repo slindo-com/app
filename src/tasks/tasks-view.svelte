@@ -1,13 +1,11 @@
 <script>
 	import { routerStore } from '../stores/router-store.js'
+	import { teamStore } from '../stores/team-store.js'
 	import { projectsStore } from '../stores/projects-store.js'
 	import { 
 		tasksStore,
 		tasksStoreNewTask,
-		tasksStoreChangeTitle,
-		tasksStoreChangeDescription,
-		tasksStoreChangeStatus,
-		tasksStoreChangePriority } from '../stores/tasks-store.js'
+		tasksStoreChangeAttributes } from '../stores/tasks-store.js'
 
 	import UiButton from '../ui/ui-button.svelte'
 	import UiViewNav from '../ui/ui-view-nav.svelte'
@@ -45,6 +43,13 @@
 		id: '2'
 	}]
 
+	$: responsibleOptions = $teamStore.active 
+		? $teamStore.active.users.map(user => new Object({
+				id: user.id,
+				title: user.title.length > 0 ? user.title : 'Without Name'
+			}))
+		: []
+
 </script>
 
 <UiViewNav links={LINKS} />
@@ -67,6 +72,11 @@
 			<a
 				href="/{$routerStore.team}/{$routerStore.view}/{$routerStore.project}/{$routerStore.subview}/{task.id}/"
 				class="entry border-bottom">
+				
+				<strong>
+					SLI-1
+				</strong>
+
 				{task.title ? task.title : 'No task summary'}
 			</a>
 		{/each}
@@ -81,8 +91,8 @@
 						<UiDetailInput
 							label="Summary"
 							type="text"
-							value={$tasksStore.detailTask.title}
-							on:save={e => tasksStoreChangeTitle($tasksStore.detailTask.id, e.detail)}
+							bind:value={$tasksStore.detailTask.title}
+							on:save={e => tasksStoreChangeAttributes($tasksStore.detailTask.id, { title: e.detail })}
 							transparent />
 					</div>
 					<div class="input-wrapper">
@@ -90,8 +100,8 @@
 							label=""
 							placeholder="No description given. Click here to add one."
 							type="text"
-							value={$tasksStore.detailTask.description}
-							on:save={e => tasksStoreChangeDescription($tasksStore.detailTask.id, e.detail)}
+							bind:value={$tasksStore.detailTask.description}
+							on:save={e => tasksStoreChangeAttributes($tasksStore.detailTask.id, { description: e.detail })}
 							transparent />
 					</div>
 					<div class="input-wrapper">
@@ -104,26 +114,20 @@
 					<div class="input-wrapper">
 						<UiDetailSelect
 							label="Status"
-							type="text"
+							empty="No status selected"
 							bind:value={$tasksStore.detailTask.status}
 							options={statusOptions}
-							on:save={e => tasksStoreChangeStatus($tasksStore.detailTask.id, e.detail)} />
+							on:save={e => tasksStoreChangeAttributes($tasksStore.detailTask.id, { status: e.detail })} />
 					</div>
 
 
 					<div class="input-wrapper">
-						<UiDetailInput
+						<UiDetailSelect
 							label="Responsible"
-							type="text"
-							value="Benjamin Kowalski" />
-					</div>
-
-
-					<div class="input-wrapper">
-						<UiDetailInput
-							label="Reporter"
-							type="text"
-							value="Benjamin Kowalski" />
+							empty="No one responsible"
+							bind:value={$tasksStore.detailTask.responsible}
+							options={responsibleOptions}
+							on:save={e => tasksStoreChangeAttributes($tasksStore.detailTask.id, { responsible: e.detail })} />
 					</div>
 
 
@@ -138,10 +142,10 @@
 					<div class="input-wrapper">
 						<UiDetailSelect
 							label="Priority"
-							type="text"
+							empty="Normal"
 							bind:value={$tasksStore.detailTask.priority}
 							options={priorityOptions}
-							on:save={e => tasksStoreChangePriority($tasksStore.detailTask.id, e.detail)} />
+							on:save={e => tasksStoreChangeAttributes($tasksStore.detailTask.id, { priority: e.detail })} />
 					</div>
 
 
@@ -150,6 +154,15 @@
 							label="Due Date"
 							type="text"
 							value="No Due Date" />
+					</div>
+
+					<div class="input-wrapper">
+						<UiDetailInput
+							label="Reporter"
+							type="text"
+							value="Benjamin Kowalski"
+							transparent
+							disabled />
 					</div>
 
 
@@ -180,7 +193,7 @@
 	.entry {
 		display:block;
 		margin:0 36px;
-		line-height: 42px;
+		line-height: 48px;
 		font-size:14px;
 		color:var(--c-font);
 	}
@@ -188,6 +201,11 @@
 	.entry:hover {
 		text-decoration: none;
 		background:#FAFAFA;
+	}
+
+	.entry strong {
+		display:inline-block;
+		margin-right: 6px;
 	}
 
 

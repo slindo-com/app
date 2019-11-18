@@ -35,6 +35,7 @@
 
 	function blur(e) {
 		focused = false
+		dispatch('save', value)
 		dispatch('blur')
 	}
 
@@ -86,7 +87,9 @@
 	{/if}
 
 	{#if focused}
-		<div class="shadow"></div>
+		<div 
+			class="shadow"
+			transition:fade="{{ duration: 100 }}"></div>
 	{/if}
 
 </div>
@@ -135,17 +138,15 @@
 	background:#FFF;
 }
 
-.input-wrapper.disabled input {
-	border-color:red; /*TODO*/
-}
-
-.input-wrapper.disabled:hover input, .input-wrapper.disabled:focus input {
-	border-color:red; /*TODO*/
-}
-
 .input-wrapper.transparent input {
 	background:transparent;
 	box-shadow: none;
+}
+
+.input-wrapper.transparent.disabled input:hover {
+	background:transparent;
+	box-shadow:none;
+	cursor:default;
 }
 
 .input-wrapper input {

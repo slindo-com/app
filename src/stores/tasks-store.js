@@ -94,8 +94,6 @@ function setDetailTask() {
 
 	const detailTask = tasks.find(val => val.id === detailId)
 
-	console.log(detailId, tasks, detailTask)
-
 	tasksStore.update(data => {
 		data.detailTask = detailTask
 		return data
@@ -118,43 +116,11 @@ export async function tasksStoreNewTask(project) {
 }
 
 
-export function tasksStoreChangeTitle(id, title) {
+export function tasksStoreChangeAttributes(id, data) {
 	sws.db.update({
 		col: 'tasks',
 		id,
-		data: {
-			title
-		}
-	})
-}
-
-export function tasksStoreChangeDescription(id, description) {
-	sws.db.update({
-		col: 'tasks',
-		id,
-		data: {
-			description
-		}
-	})
-}
-
-export function tasksStoreChangeStatus(id, status) {
-	sws.db.update({
-		col: 'tasks',
-		id,
-		data: {
-			status
-		}
-	})
-}
-
-export function tasksStoreChangePriority(id, priority) {
-	sws.db.update({
-		col: 'tasks',
-		id,
-		data: {
-			priority
-		}
+		data
 	})
 }
 

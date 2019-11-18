@@ -5,6 +5,7 @@
 	const dispatch = createEventDispatcher()
 
 	export let label = 'No Label'
+	export let empty = ''
 	export let value = null
 	export let transparent = false
 	export let options = []
@@ -19,7 +20,7 @@
 		.filter(val => val.title.toLowerCase().includes(searchTerm.toLowerCase()))
 
 	$: valueOption = options.find(option => option.id === value)
-	$: valueTitle = valueOption ? valueOption.title : 'Nothing selected'
+	$: valueTitle = valueOption ? valueOption.title : (empty.length > 0 ? empty : 'Nothing selected')
 
 
 	onMount(() => {

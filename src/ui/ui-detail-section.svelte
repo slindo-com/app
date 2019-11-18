@@ -7,7 +7,7 @@
 </script>
 
 {#if hasDetail}
-	<section class="{wide ? 'wide' : ''}">
+	<section class="border-vertical {wide ? 'wide' : ''}">
 		<slot></slot>
 	</section>
 {/if}
@@ -23,6 +23,8 @@
 		overflow-x: hidden;
 		overflow-y: auto;
 		border-radius: var(--border-radius);
+		border-top-left-radius:0;
+		border-bottom-left-radius:0;
 	}
 
 	.wide {
