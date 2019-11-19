@@ -25,7 +25,6 @@ export function tasksStoreInit() {
 	})
 
 	routerStore.subscribe(routerData => {
-		console.log(routerData)
 		if(routerData.view === 'tasks' && routerData.detail && routerData.detail != detailId) {
 			detailId = routerData.detail
 			setDetailTask()
@@ -79,9 +78,9 @@ function setListener(teamId) {
 						}
 					}
 
-					return data
-
 					setDetailTask()
+
+					return data
 				})
 			}
 		})
@@ -117,7 +116,6 @@ export async function tasksStoreNewTask(project) {
 
 
 export function tasksStoreChangeAttributes(id, data) {
-	console.log(id, data)
 	sws.db.update({
 		col: 'tasks',
 		id,

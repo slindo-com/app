@@ -16,6 +16,7 @@
 	import UiDetailEditable from '../ui/ui-detail-editable.svelte'
 	import UiDetailSelect from '../ui/ui-detail-select.svelte'
 	import UiDetailTags from '../ui/ui-detail-tags.svelte'
+	import UiDetailDate from '../ui/ui-detail-date.svelte'
 
 
 	const LINKS = [{
@@ -149,12 +150,11 @@
 							on:save={e => tasksStoreChangeAttributes($tasksStore.detailTask.id, { priority: e.detail })} />
 					</div>
 
-
 					<div class="input-wrapper">
-						<UiDetailInput
+						<UiDetailDate
 							label="Due Date"
-							type="text"
-							value="No Due Date" />
+							bind:value={$tasksStore.detailTask.due}
+							on:save={e => tasksStoreChangeAttributes($tasksStore.detailTask.id, { due: e.detail })} />
 					</div>
 
 					<div class="input-wrapper">
@@ -165,6 +165,9 @@
 							transparent
 							disabled />
 					</div>
+
+
+					<!-- {JSON.stringify($tasksStore.detailTask)} -->
 
 
 				</section>

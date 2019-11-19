@@ -238,6 +238,7 @@
 .wrapper input {
 	display:inline-block;
 	padding:0;
+	margin:0;
 	border:0;
 	background:#FFF;
 	line-height: 30px;
