@@ -117,6 +117,7 @@ export async function tasksStoreNewTask(project) {
 
 
 export function tasksStoreChangeAttributes(id, data) {
+	console.log(id, data)
 	sws.db.update({
 		col: 'tasks',
 		id,

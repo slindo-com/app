@@ -14,6 +14,7 @@
 	import UiDetailInput from '../ui/ui-detail-input.svelte'
 	import UiDetailEditable from '../ui/ui-detail-editable.svelte'
 	import UiDetailSelect from '../ui/ui-detail-select.svelte'
+	import UiDetailTags from '../ui/ui-detail-tags.svelte'
 
 
 	const LINKS = [{
@@ -132,10 +133,11 @@
 
 
 					<div class="input-wrapper">
-						<UiDetailInput
+						<UiDetailTags
 							label="Labels"
 							type="text"
-							value="Arbeit, Nervt" />
+							bind:value={$tasksStore.detailTask.labels}
+							on:save={e => tasksStoreChangeAttributes($tasksStore.detailTask.id, { labels: e.detail })}/>
 					</div>
 
 
