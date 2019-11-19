@@ -36,7 +36,7 @@
 
 </script>
 
-<nav class="bp-{$uiStore.breakpoint}">
+<nav class="border-bottom bp-{$uiStore.breakpoint}">
 	<ul>
 		{#each links as link}
 			<li>

@@ -11,6 +11,7 @@
 	import UiViewNav from '../ui/ui-view-nav.svelte'
 	import UiViewSection from '../ui/ui-view-section.svelte'
 	import UiDetailSection from '../ui/ui-detail-section.svelte'
+	import UiDetailTitle from '../ui/ui-detail-title.svelte'
 	import UiDetailInput from '../ui/ui-detail-input.svelte'
 	import UiDetailEditable from '../ui/ui-detail-editable.svelte'
 	import UiDetailSelect from '../ui/ui-detail-select.svelte'
@@ -88,15 +89,13 @@
 		{#if $tasksStore.detailTask}
 			<div class="detail-wrapper">
 				<section class="left">
-					<div class="input-wrapper">
-						<UiDetailInput
-							label="Summary"
-							type="text"
+					<div class="input-wrapper wide-input-wrapper">
+						<UiDetailTitle
 							bind:value={$tasksStore.detailTask.title}
 							on:save={e => tasksStoreChangeAttributes($tasksStore.detailTask.id, { title: e.detail })}
 							transparent />
 					</div>
-					<div class="input-wrapper">
+					<div class="input-wrapper wide-input-wrapper">
 						<UiDetailEditable
 							label=""
 							placeholder="No description given. Click here to add one."
@@ -198,6 +197,9 @@
 		line-height: 48px;
 		font-size:14px;
 		color:var(--c-font);
+		white-space: nowrap;
+		overflow:hidden;
+		text-overflow: ellipsis;
 	}
 
 	.entry:hover {
@@ -233,5 +235,9 @@
 
 	.input-wrapper {
 		margin-bottom:18px;
+	}
+
+	.wide-input-wrapper {
+		margin:0 -18px;
 	}
 </style>
