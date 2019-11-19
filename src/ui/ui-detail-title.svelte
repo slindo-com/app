@@ -88,7 +88,6 @@
 	position:relative;
 	margin:0;
 	width:100%;
-	max-width:560px;
 }
 
 .wrapper.transparent textarea {

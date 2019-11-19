@@ -275,3 +275,7 @@ small {
 .editable >div {
     margin-bottom:12px;
 }
+
+.editable >div:last-child {
+    margin-bottom:0;
+}
