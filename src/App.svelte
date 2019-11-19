@@ -100,6 +100,20 @@ const MODELS = {
 			['team', 'project'],
 			['team', 'project', 'user']
 		]
+	}, 
+	'comments': {
+		col: 'comments',
+		attributes: {
+			type: null,
+			comment: '',
+			project: null,
+			user: null,
+			team: null
+		},
+		indexes: [
+			['team'],
+			['team', 'type']
+		]
 	}
 }
 
