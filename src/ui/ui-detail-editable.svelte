@@ -5,12 +5,12 @@
 
 	const dispatch = createEventDispatcher()
 
-	export let label = 'No Label'
-	// export let placeholder = ''
+	export let placeholder = ''
 	export let value = ''
 	export let disabled = false
 	export let error = ''
 	export let transparent = false
+	export let isFilled = false
 
 	let el,
 		editorEl,
@@ -27,17 +27,25 @@
 	})
 
 	afterUpdate(() => {
-		console.log('UTZ')
 		if(valueIntern != value) {
+
 			valueIntern = value
 			markdownToHtml()
 		}
+		setTimeout(() => isFilled = html.trim().length > 0)
 	})
 
+	export function set(newValue) {
+		valueIntern = newValue
+		markdownToHtml()
+	}
+
+	export function get(newValue) {
+		return toMarkdown(html)
+	}
+
 	function markdownToHtml() {
-		console.log('markdownToHtml', valueIntern)
 		html = toHtml(valueIntern)
-		console.log('HTML', html)
 	}
 
 	function focus(e) {
@@ -56,6 +64,10 @@
 		prefilled = false
 		error = ''
 		dispatch('keydown', e.keyCode)
+
+		setTimeout(() => {
+			isFilled = html.trim().length > 0
+		})
 	}
 
 	function paste(e) {
@@ -111,11 +123,6 @@
 	bind:this={el}
 	class="wrapper {focused ? 'focused' : ''} {disabled ? 'disabled' : ''} {transparent ? 'transparent' : ''} {value.length > 0 || prefilled ? 'filled' : ''}"
 		on:keydown={e => keydown(e)}>
-	{#if label.length > 0}
-		<label>
-			{label}
-		</label>
-	{/if}
 
 	<div
 		class="editable"
@@ -126,6 +133,12 @@
 		on:blur={e => blur(e)}
 		on:paste={e => paste(e)}>
 	</div>
+
+	{#if value.trim().length === 0}
+		<div class="placeholder">
+			{placeholder}
+		</div>
+	{/if}
 
 	{#if error && error.length > 0}
 		<div class="error" transition:fade="{{delay: 0, duration: 100}}">
@@ -146,37 +159,9 @@
 	width:100%;
 }
 
-.wrapper label {
-	line-height:11.5px;
-	position:absolute;
-	top:50%;
-	left:18px;
-	font-size:12px;
-	transform-origin:0 0;
-	transform:translateY(-50%);
-	padding:0;
-	transition:top 100ms ease;
-	color:var(--c-font);
-	pointer-events:none;
-}
-
-.wrapper.focused label,
-.wrapper.filled label {
-	top:18px;
-}
-
 .wrapper.transparent .editable {
 	background:transparent;
 	box-shadow: none;
-}
-
-.wrapper.focused .editable,
-.wrapper.filled .editable {
-	/* padding:25px 18px 11px 18px; */
-}
-
-.wrapper.focused label {
-	z-index:1020;
 }
 
 .wrapper.focused .editable, .wrapper.focused .editable:hover {
@@ -226,6 +211,16 @@
 .wrapper .editable:-webkit-autofill {
 	animation-duration: 50000s;
 	animation-name: onautofillstart;
+}
+
+.placeholder {
+	position: absolute;
+	top:50%;
+	left:18px;
+	width:calc(100% - 36px);
+	transform:translateY(-50%);
+	pointer-events: none;
+	opacity: .5;
 }
 
 .error {

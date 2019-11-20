@@ -1,4 +1,6 @@
 <script>
+	import { onMount } from 'svelte'
+	import { get } from 'svelte/store'
 	import { routerStore } from '../stores/router-store.js'
 	import { teamStore } from '../stores/team-store.js'
 	import { projectsStore } from '../stores/projects-store.js'
@@ -6,6 +8,7 @@
 		tasksStore,
 		tasksStoreNewTask,
 		tasksStoreChangeAttributes } from '../stores/tasks-store.js'
+	import { commentsStore, commentsStoreGetComments, commentsStoreNewComment } from '../stores/comments-store.js'
 
 	import UiButton from '../ui/ui-button.svelte'
 	import UiDetailTitle from '../ui/ui-detail-title.svelte'
@@ -14,6 +17,7 @@
 	import UiDetailSelect from '../ui/ui-detail-select.svelte'
 	import UiDetailTags from '../ui/ui-detail-tags.svelte'
 	import UiDetailDate from '../ui/ui-detail-date.svelte'
+	import UiDetailComment from '../ui/ui-detail-comment.svelte'
 
 
 
@@ -36,6 +40,11 @@
 		id: '2'
 	}]
 
+	let comments = [],
+		commentText = '',
+		commentTextFilled = false,
+		commentEl
+
 	$: responsibleTeamOptions = $teamStore.active 
 		? $teamStore.active.users.map(user => new Object({
 				id: user.id,
@@ -46,6 +55,28 @@
 			id: null,
 			title: 'No One'
 		}]).concat(responsibleTeamOptions)
+
+
+	onMount(() => {
+		const tasksData = get(tasksStore)
+
+		commentsStoreGetComments('tasks', tasksData.detailTask.id).then(res => {
+			comments = res
+		})
+	})
+
+	function saveComment() {
+		const comment = commentEl.get(),
+			tasksData = get(tasksStore)
+
+		commentsStoreNewComment('tasks', tasksData.detailTask.id, comment).then(() => {
+			commentEl.set('')
+
+			commentsStoreGetComments('tasks', tasksData.detailTask.id).then(res => {
+				comments = res
+			})
+		})
+	}
 </script>
 
 
@@ -60,15 +91,42 @@
 		</div>
 		<div class="input-wrapper wide-input-wrapper">
 			<UiDetailEditable
-				label=""
 				placeholder="No description given. Click here to add one."
-				type="text"
 				bind:value={$tasksStore.detailTask.description}
 				on:save={e => tasksStoreChangeAttributes($tasksStore.detailTask.id, { description: e.detail })}
 				transparent />
 		</div>
 
 		<hr />
+
+
+		<div class="input-wrapper">
+			{#each comments as comment}
+				<UiDetailComment data={comment} />
+			{/each}
+		</div>
+
+
+		<div class="input-wrapper">
+			<UiDetailEditable
+				placeholder="Click here to add a comment"
+				bind:this={commentEl}
+				bind:value={commentText}
+				bind:isFilled = {commentTextFilled} />
+
+			{#if commentTextFilled}
+				<div class="comment-button-wrapper">
+					<UiButton
+						label="Save Comment"
+						on:click={e => saveComment()} />
+					<UiButton
+						label="Cancel"
+						type="transparent"
+						on:click={e => commentEl.set('')} />
+				</div>
+			{/if}
+		</div>
+
 
 	</section>
 	<section class="right">
@@ -166,8 +224,12 @@
 		margin:0 -18px;
 	}
 
+	.comment-button-wrapper {
+		margin-top:18px;
+	}
+
 	hr {
-		margin:30px 0 0 0;
+		margin:30px 0;
 		border:0;
 		height:1px;
 		border:#CCC 1px solid;

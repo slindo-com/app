@@ -4,6 +4,7 @@
 	import { authStore, authInit } from './stores/auth-store.js'
 	import { timesStoreInit } from './stores/times-store.js'
 	import { tasksStoreInit } from './stores/tasks-store.js'
+	import { commentsStoreInit } from './stores/comments-store.js'
 	import { userStoreInit } from './stores/user-store.js'
 	import { teamStore, teamStoreInit } from './stores/team-store.js'
 	import { projectsStoreInit } from './stores/projects-store.js'
@@ -105,17 +106,19 @@ const MODELS = {
 		col: 'comments',
 		attributes: {
 			type: null,
+			asset: null,
 			comment: '',
-			project: null,
 			user: null,
 			team: null
 		},
 		indexes: [
 			['team'],
-			['team', 'type']
+			['type', 'asset']
 		]
 	}
 }
+
+
 
 	onMount(async () => {
 
@@ -134,6 +137,7 @@ const MODELS = {
 		teamStoreInit()
 		projectsStoreInit()
 		reportsStoreInit()
+		commentsStoreInit()
 	})
 
 	function resize() {
