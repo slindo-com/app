@@ -30,6 +30,15 @@ function setListener() {
 	})
 }
 
+
+export function teamStoreGetUser(id) {
+	const teamData = get(teamStore)
+
+	const user = teamData.active.users.find(val => val.id === id)
+	return user && user.title.length > 0 ? user.title : 'Without Name'
+}
+
+
 export function teamStoreChangeTitle(id, title) {
 	sws.auth.setTeamTitle({
 		id,

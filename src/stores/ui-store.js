@@ -24,6 +24,9 @@ export const uiStore = writable({
 })
 
 
+export const uiAgoStore = writable(new Date())
+
+
 export const uiStopwatchStore = writable({
 	hours: 0,
 	minutes: 0,
@@ -41,6 +44,10 @@ export function uiStoreInit() {
 		data.isTouchDevice = ('ontouchstart' in window || navigator.msMaxTouchPoints) ? true : false
 		return data
 	})
+
+	setInterval(() =>
+		uiAgoStore.update(() => new Date())
+	, 6000)
 }
 
 

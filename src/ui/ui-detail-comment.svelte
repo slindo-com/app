@@ -1,7 +1,10 @@
 <script>
 	import { onMount } from 'svelte'
+	import { teamStore, teamStoreGetUser } from '../stores/team-store.js'
 	import { uiStore } from '../stores/ui-store.js'
 	import { toHtml } from '../helpers/markdown.js'
+
+	import UiSince from '../ui/ui-since.svelte'
 
 	
 	export let data = {}
@@ -19,8 +22,9 @@
 	<div class="comment">
 		<header>
 			<strong>
-				Benjamin Kowalski:
+				{teamStoreGetUser(data.user)}
 			</strong>
+			· postet <UiSince date={new Date(data.createdAt)} />
 		</header>
 		{@html toHtml(data.comment)}
 	</div>
@@ -31,7 +35,10 @@
 	.wrapper {
 		display:flex;
 		flex:row wrap;
-		margin-bottom:36px;
+	}
+
+	.wrapper:hover .comment{
+		background:#FFF;
 	}
 
 	.profile {
@@ -39,11 +46,13 @@
 		height:36px;
 		border-radius: 50%;
 		background:var(--c-blue);
-		margin-right:18px;
+		margin:6px 6px 0 0;
 	}
 
 	.comment {
-
+		flex-grow: 1;
+		padding:18px 12px;
+		border-radius: var(--border-radius);
 	}
 
 	header {
