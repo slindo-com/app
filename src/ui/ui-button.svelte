@@ -83,9 +83,11 @@
 	}
 
 	a:active {
-		background: #99815C;
-		transform: translateY(2px);
-		box-shadow: 0 -4px 0 -3px rgba(0, 0, 0, .05);
+		background:#FAFAFA;
+	}
+
+	a:active:after {
+		border-color:var(--c-blue);
 	}
 
 	a:after {
