@@ -28,7 +28,7 @@ export function authInit() {
 			})
 		}
 
-		console.log(Date.now() - loadedTime)
+		// console.log(Date.now() - loadedTime)
 	})
 }
 

@@ -4,8 +4,10 @@
 	import { authStore, authInit } from './stores/auth-store.js'
 	import { timesStoreInit } from './stores/times-store.js'
 	import { tasksStoreInit } from './stores/tasks-store.js'
+	import { commentsStoreInit } from './stores/comments-store.js'
 	import { userStoreInit } from './stores/user-store.js'
 	import { teamStore, teamStoreInit } from './stores/team-store.js'
+	import { projectsStoreInit } from './stores/projects-store.js'
 	import { reportsStoreInit } from './stores/reports-store.js'
 	import { uiStore, uiStoreInit, uiStoreSetBreakpoint } from './stores/ui-store.js'
 	import { getWindowWidth } from './helpers/helpers.js'
@@ -32,14 +34,6 @@
 	}
 
 const MODELS = {
-	'teams': {
-		col: 'teams',
-		attributes: {
-			title: '',
-			members: {}
-		},
-		indexes: []
-	}, 
 	'settings': {
 		col: 'settings',
 		attributes: {
@@ -48,6 +42,27 @@ const MODELS = {
 			stopwatchStartTime: 0,
 		},
 		indexes: []
+	}, 
+	'teams': {
+		col: 'teams',
+		attributes: {
+			title: '',
+			members: {}
+		},
+		indexes: []
+	}, 
+	'projects': {
+		col: 'projects',
+		attributes: {
+			code: 'AAA',
+			title: '',
+			color: '#333',
+			user: null,
+			team: null
+		},
+		indexes: [
+			['team']
+		]
 	}, 
 	'times': {
 		col: 'times',
@@ -68,19 +83,42 @@ const MODELS = {
 	'tasks': {
 		col: 'tasks',
 		attributes: {
+			number: null,
 			title: '',
+			description: '',
 			project: null,
-			color: '#333',
-			archived: false,
+			status: null,
+			responsible: null,
+			labels: [],
+			priority: null,
+			due: null,
+			user: null,
+			team: null
+		},
+		indexes: [
+			['number'],
+			['team'],
+			['team', 'project'],
+			['team', 'project', 'user']
+		]
+	}, 
+	'comments': {
+		col: 'comments',
+		attributes: {
+			type: null,
+			asset: null,
+			comment: '',
 			user: null,
 			team: null
 		},
 		indexes: [
 			['team'],
-			['project', 'team']
+			['type', 'asset']
 		]
 	}
 }
+
+
 
 	onMount(async () => {
 
@@ -97,7 +135,9 @@ const MODELS = {
 		tasksStoreInit()
 		userStoreInit()
 		teamStoreInit()
+		projectsStoreInit()
 		reportsStoreInit()
+		commentsStoreInit()
 	})
 
 	function resize() {
@@ -139,6 +179,6 @@ const COLORS = [
 
 {/if}
 
-<UiFocus />
+<!-- <UiFocus /> -->
 
 <svelte:window on:resize={e => resize()} />

@@ -45,9 +45,9 @@
 	data-config="{focusConfig}"
 	data-top={focusTop}>
 	<span>
-		{#if type === 'default' || type === 'icon-right' || type === 'dark' }	
+		{#if type === 'default' || type === 'icon-right' || type === 'transparent' }	
 			{label}
-		{:else if type === 'icon' || type === 'entry' || type === 'entry has-stopwatch'}
+		{:else if type === 'icon'}
 			<UiIcon type={icon} color="{color}" />
 		{/if}
 	</span>
@@ -68,7 +68,6 @@
 		border-radius: var(--border-radius);
 		background:#FFF;
 		cursor: pointer;
-		/* box-shadow: 0 6px 0 -3px rgba(0, 0, 0, .05); */
 		transition: all 100ms ease;
 		outline:none;
 		box-shadow: 0 -3px 0 #DDDAD5 inset, -2px 0 0 #F5F5F4 inset;
@@ -84,9 +83,11 @@
 	}
 
 	a:active {
-		background: #99815C;
-		transform: translateY(2px);
-		box-shadow: 0 -4px 0 -3px rgba(0, 0, 0, .05);
+		background:#FAFAFA;
+	}
+
+	a:active:after {
+		border-color:var(--c-blue);
 	}
 
 	a:after {
@@ -100,6 +101,7 @@
 	    border-radius:var(--border-radius);
 	    border:#CCC 1px solid;
 	    pointer-events: none;
+	    transition: all 100ms ease;
 	}
 
 	@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
@@ -133,58 +135,26 @@
 		padding:14px;
 	}
 
-	.type-icon em:after, .type-entry em:after {
+	.type-icon em:after {
 		width: 60px;
 		height: 60px;
 	}
 
-	.type-entry {
-		width:36px;
-		height:36px;
-		background:#FFF;
-		box-shadow:none;
-	}
-
-	.type-entry:hover {
-		transform: none;
-		box-shadow: 0 6px 0 -3px rgba(0, 0, 0, .05);
-	}
-
-	.type-entry.hovered {
-		background:var(--c-grey);
-		box-shadow: 0 6px 0 -3px rgba(0, 0, 0, .05);
-	}
-
-
-	.type-entry span {
-		display: block;
-		width:34px;
-		height:34px;
-		padding:11px;
-	}
-
-	.type-dark {
-		background:var(--c-darkgrey);
-	}
-
-	.type-dark span {
-		color:#FFF;
-		background:var(--c-darkgrey);
-	}
-
-	.has-stopwatch {
-		border-top-right-radius:0;
-		border-bottom-right-radius:0;
-	}
-
-	.has-stopwatch span {
-		border-top-right-radius:0;
-		border-bottom-right-radius:0;
-		width:35px;
-	}
-
-	.has-stopwatch.hovered {
+	.type-transparent {
+		background:transparent;
 		box-shadow: none;
+	}
+
+	.type-transparent:after {
+		opacity:0;
+	}
+
+	.type-transparent:hover {
+		background:#FFF;
+	}
+
+	.type-transparent:hover:after {
+		opacity:1;
 	}
 
 	.type-icon-right {

@@ -81,6 +81,7 @@ body {
 	font-family:overpass, sans-serif;
 	background:var(--c-background);
     color:var(--c-darkgrey);
+    font-size:14px;
 }
 
 *, *:before, *:after {
@@ -141,7 +142,7 @@ h2 {
 }
 
 p {
-    font-size:16.5px;
+    font-size:14px;
     line-height:30px;
     padding:0;
     margin:0;
@@ -198,4 +199,83 @@ small {
         transform: scale(.5);
         transform-origin: 0 0;
     }
+}
+
+
+.border-top {
+    position: relative;
+}
+
+.border-top:after {
+    content:'';
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height: 1px;
+    background:#CCC;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+    .border-top:after {
+        background:#CCC;
+        transform:scale(1, 0.5);
+        transform-origin: 0 100%;
+    }
+}
+
+
+.border-bottom {
+    position: relative;
+}
+
+.border-bottom:after {
+    content:'';
+    position: absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height: 1px;
+    background:#CCC;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+    .border-bottom:after {
+        background:#CCC;
+        transform:scale(1, 0.5);
+        transform-origin: 0 100%;
+    }
+}
+
+.border-vertical {
+    position: relative;
+}
+
+.border-vertical:after {
+    content:'';
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width: 1px;
+    background:#CCC;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+    .border-vertical:after {
+        background:#CCC;
+        transform:scale(0.5, 1);
+        transform-origin: 0 100%;
+    }
+}
+
+
+
+
+.editable >div {
+    margin-bottom:12px;
+}
+
+.editable >div:last-child {
+    margin-bottom:0;
 }
