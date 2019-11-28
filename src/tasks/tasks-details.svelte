@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte'
 	import { get } from 'svelte/store'
 	import { routerStore } from '../stores/router-store.js'
-	import { teamStore } from '../stores/team-store.js'
+	import { teamStore, membersStore } from '../stores/team-store.js'
 	import { projectsStore } from '../stores/projects-store.js'
 	import { 
 		tasksStore,
@@ -48,7 +48,9 @@
 	$: responsibleTeamOptions = $teamStore.active 
 		? $teamStore.active.users.map(user => new Object({
 				id: user.id,
-				title: user.title.length > 0 ? user.title : 'Without Name'
+				title: $membersStore[user.id]
+				 ? $membersStore[user.id].firstname +' '+ $membersStore[user.id].lastname
+				 : 'Without Name'
 			}))
 		: []
 	$: responsibleOptions = ([{

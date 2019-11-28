@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte'
-	import { teamStore, teamStoreGetUser } from '../stores/team-store.js'
+	import { teamStore, membersStore, teamStoreGetUser } from '../stores/team-store.js'
 	import { uiStore } from '../stores/ui-store.js'
 	import { toHtml } from '../helpers/markdown.js'
 
@@ -24,7 +24,9 @@
 	<div class="comment">
 		<header>
 			<strong>
-				{user && user.title.length > 0 ? user.title : 'Without Name'}
+				{user && $membersStore[user.id] 
+					? $membersStore[user.id].firstname +' '+ $membersStore[user.id].lastname
+					: 'Without Name'}
 			</strong>
 			· postet <UiSince date={new Date(data.createdAt)} />
 		</header>
