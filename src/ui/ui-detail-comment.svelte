@@ -9,6 +9,8 @@
 	
 	export let data = {}
 
+	$: user = teamStoreGetUser(data.user)
+
 	onMount(() => {
 		
 	})
@@ -22,7 +24,7 @@
 	<div class="comment">
 		<header>
 			<strong>
-				{teamStoreGetUser(data.user)}
+				{user && user.title.length > 0 ? user.title : 'Without Name'}
 			</strong>
 			· postet <UiSince date={new Date(data.createdAt)} />
 		</header>

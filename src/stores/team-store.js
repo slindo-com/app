@@ -34,8 +34,12 @@ function setListener() {
 export function teamStoreGetUser(id) {
 	const teamData = get(teamStore)
 
+	if(!teamData.active) {
+		return null
+	}
+
 	const user = teamData.active.users.find(val => val.id === id)
-	return user && user.title.length > 0 ? user.title : 'Without Name'
+	return user
 }
 
 
@@ -60,4 +64,15 @@ export function teamStoreInvite(email, name) {
 		email,
 		name
 	})
+}
+
+
+export function teamStoreUpdateUser(id, name) {
+	const teamData = get(teamStore)
+
+	sws.auth.updateMember({
+		teamId: teamData.active.id,
+		id,
+		name
+	})	
 }

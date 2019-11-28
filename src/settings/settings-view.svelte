@@ -31,8 +31,6 @@
 
 <UiViewNav links={LINKS} />
 
-Settings – 
-
 <svelte:component this={SUBVIEWS[$routerStore.subview]}/>
 
 <style>
