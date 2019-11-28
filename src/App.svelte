@@ -51,6 +51,18 @@ const MODELS = {
 		},
 		indexes: []
 	}, 
+	'members': {
+		col: 'members',
+		attributes: {
+			firstname: '',
+			lastname: '',
+			user: null,
+			team: null
+		},
+		indexes: [
+			['team']
+		]
+	}, 
 	'projects': {
 		col: 'projects',
 		attributes: {

@@ -2,33 +2,49 @@
 	import { onMount } from 'svelte'
 	import { get } from 'svelte/store'
 	import { routerStore } from '../stores/router-store.js'
-	import { teamStore, teamStoreGetUser, teamStoreUpdateUser } from '../stores/team-store.js'
+	import { teamStore, membersStore, teamStoreGetUser, teamStoreUpdateUser } from '../stores/team-store.js'
 	import { projectsStore } from '../stores/projects-store.js'
 	
 	import UiDetailInput from '../ui/ui-detail-input.svelte'
 
 
-	$: data = teamStoreGetUser($routerStore.detail, $teamStore)
+	let data = {
+		firstname: '',
+		lastname: ''
+	}
 
 	onMount(() => {
-		
+		membersStore.subscribe(membersData => {
+			const { detail } = get(routerStore)
+
+			data = membersData[detail] || {
+				firstname: '',
+				lastname: ''
+			}
+		})
 	})
 
 
 </script>
 
 
-{#if data}
-	<div class="detail-wrapper">
-		<div class="input-wrapper">
-			<UiDetailInput
-				label="Name"
-				type="text"
-				bind:value={data.title}
-				on:save={e => teamStoreUpdateUser(data.id, data.title)} />
-		</div>
+<div class="detail-wrapper">
+	<div class="input-wrapper">
+		<UiDetailInput
+			label="First Name"
+			type="text"
+			bind:value={data.firstname}
+			on:save={e => teamStoreUpdateUser($routerStore.detail, data)} />
 	</div>
-{/if}
+	<div class="input-wrapper">
+		<UiDetailInput
+			label="Last Name"
+			type="text"
+			bind:value={data.lastname}
+			on:save={e => teamStoreUpdateUser($routerStore.detail, data)} />
+	</div>
+</div>
+
 
 
 <style>

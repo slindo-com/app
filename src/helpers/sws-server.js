@@ -204,26 +204,6 @@ swsServer.auth = {
 				err
 			})
 		})
-	},
-
-
-	updateMetaData: ({ promiseId, teamId, id, name }) => {
-		swsServer.gateway.send({
-			action: 'updateMetaData',
-			teamId,
-			id,
-			name
-		}).then(res => {
-			swsServer.bridge.answer({
-				promiseId: promiseId,
-				answer: res
-			})
-		}).catch(err => {
-			swsServer.bridge.answer({
-				promiseId: promiseId,
-				err
-			})
-		})
 	}
 }
 
@@ -752,7 +732,6 @@ swsServer.bridge = {
 		sendPasswordMail: swsServer.auth.sendPasswordMail,
 		setTeamTitle: swsServer.auth.setTeamTitle,
 		inviteMember: swsServer.auth.inviteMember,
-		updateMetaData: swsServer.auth.updateMetaData,
 
 		new: swsServer.db.new,
 		query: swsServer.db.query,

@@ -100,16 +100,6 @@ sws.auth = {
 			email,
 			name
 		})
-	},
-
-
-	updateMember: ({ teamId, id, name }) => {
-		return sws.bridge.send({
-			action: 'updateMember',
-			teamId,
-			id,
-			name
-		})
 	}
 }
 

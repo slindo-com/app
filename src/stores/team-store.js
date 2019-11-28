@@ -8,14 +8,24 @@ export const teamStore = writable({
 	active: null
 })
 
+export const membersStore = writable({})
+
 let listenerMember,
 	listenerAdmin,
 	listener = {},
 	invitationListener,
-	interval
+	interval,
+	teamId
 
 export function teamStoreInit() {
 	setListener()
+
+	teamStore.subscribe(teamData => {
+		if(teamData.active && teamData.active.id != teamId) {
+			teamId = teamData.active.id
+			setMembersListener(teamId)
+		}
+	})
 }
 
 
@@ -31,15 +41,45 @@ function setListener() {
 }
 
 
-export function teamStoreGetUser(id) {
-	const teamData = get(teamStore)
+function setMembersListener() {
+	if(teamId) {
+		sws.db.query({
+			col: 'members',
+			query: {
+				team: teamId
+			}
+		}).then(res => {
+			membersStore.update(data => {
 
-	if(!teamData.active) {
-		return null
+				if(data) {
+					res.forEach(val => {
+						data[val.id] = val
+					})
+				}
+				return data
+			})
+		})
+
+		sws.db.hook({
+			hook: 'teamStore',
+			col: 'members',
+			query: {
+				team: teamId
+			},
+			fn: obj => {
+				membersStore.update(data => {
+					data[obj.id] = obj
+					return data
+				})
+			}
+		})
 	}
+}
 
-	const user = teamData.active.users.find(val => val.id === id)
-	return user
+
+export function teamStoreGetUser(id) {
+	const membersData = get(membersStore)
+	return membersData[id]
 }
 
 
@@ -67,12 +107,35 @@ export function teamStoreInvite(email, name) {
 }
 
 
-export function teamStoreUpdateUser(id, name) {
-	const teamData = get(teamStore)
+export function teamStoreUpdateUser(id, data) {
 
-	sws.auth.updateMember({
-		teamId: teamData.active.id,
-		id,
-		name
-	})	
+	const { user } = get(authStore),
+		teamData = get(teamStore),
+		membersData = get(membersStore)
+
+	if(membersData[id]) {
+		console.log('UPDATE', data)
+		return sws.db.update({
+			col: 'members',
+			id,
+			data: {
+				firstname: data.firstname,
+				lastname: data.lastname
+			}
+		})		
+	} else {
+		console.log('NEW')
+		return sws.db.new({
+			id,
+			col: 'members',
+			data: {
+				firstname: data.firstname,
+				lastname: data.lastname,
+				team: teamId,
+				user: user.id
+			}
+		})	
+	}
+
+
 }

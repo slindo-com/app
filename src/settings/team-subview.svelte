@@ -1,6 +1,6 @@
 <script>
 	import { routerStore } from '../stores/router-store.js'
-	import { teamStore } from '../stores/team-store.js'
+	import { teamStore, membersStore } from '../stores/team-store.js'
 	
 	import UiButton from '../ui/ui-button.svelte'
 	import UiViewSection from '../ui/ui-view-section.svelte'
@@ -29,7 +29,9 @@
 			<a
 				href="/{$routerStore.team}/{$routerStore.view}/{$routerStore.project}/{$routerStore.subview}/{user.id}/"
 				class="entry border-bottom">
-				{user.title ? user.title : 'Without Name'}
+				{$membersStore[user.id] 
+					? $membersStore[user.id].firstname +' '+ $membersStore[user.id].lastname 
+					: 'Without Name'}
 			</a>
 		{/each}
 	{/if}
@@ -63,6 +65,7 @@
 		white-space: nowrap;
 		overflow:hidden;
 		text-overflow: ellipsis;
+		min-height:48px;
 	}
 
 	.entry:hover {
