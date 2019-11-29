@@ -47,10 +47,7 @@
 
 <div 
 	bind:this={el}
-	class="wrapper
-		{focused ? 'focused' : ''}
-		{disabled ? 'disabled' : ''}
-		{value.length > 0 || prefilled ? 'filled' : ''}"
+	class="wrapper {focused ? 'focused' : ''} {disabled ? 'disabled' : ''} {value.length > 0 || prefilled ? 'filled' : ''}"
 		on:keydown={e => keydown(e)}>
 	<label>
 		{label}
@@ -95,7 +92,6 @@
 	margin:0;
 	width:100%;
 	max-width:560px;
-	background:red;
 }
 
 .wrapper label {
@@ -103,7 +99,7 @@
 	position:absolute;
 	top:50%;
 	left:18px;
-	font-size:12px;
+	font-size:11.5px;
 	transform-origin:0 0;
 	transform:translateY(-50%);
 	padding:0;
@@ -141,7 +137,7 @@
 	line-height:24px;
 	font-size:16px;
 	background:#FFF;
-	border-radius:6px;
+	border-radius:var(--border-radius);
 	box-shadow:none;
 	caret-color:var(--c-darkgrey);
 	box-shadow:0 0 0 100px #FFF inset;
@@ -171,7 +167,7 @@
 	line-height: 24px;
 	margin:-3px 0 0 0;
 	padding:0 12px;
-	border-radius: 6px;
+	border-radius: var(--border-radius);
 	color:#FFF;
 	box-shadow:var(--shadow-overlay);
 }

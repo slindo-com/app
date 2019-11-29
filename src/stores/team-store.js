@@ -96,13 +96,13 @@ function setInvitationListener() {
 }
 
 
-export function teamStoreInvite(email, name) {
+export async function teamStoreInvite(email) {
+
 	const teamData = get(teamStore)
 
-	sws.auth.inviteMember({
+	return sws.auth.inviteMember({
 		teamId: teamData.active.id,
-		email,
-		name
+		email
 	})
 }
 
