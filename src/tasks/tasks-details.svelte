@@ -181,7 +181,7 @@
 			<UiDetailInput
 				label="Reporter"
 				type="text"
-				value="Benjamin Kowalski"
+				value={teamStoreGetUsername($tasksStore.detailTask.user, $membersStore)}
 				transparent
 				disabled />
 		</div>
