@@ -13,8 +13,7 @@ export const userStore = writable({
 
 export const userStopwatchStore = writable(0)
 
-let listenerUserId,
-	listener,
+let listener,
 	interval,
 	userStoreInited = false
 

@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte'
 	import { routerStore } from '../stores/router-store.js'
 	import { uiStore } from '../stores/ui-store.js'
+	import { authStore } from '../stores/auth-store.js'
+	import { membersStore, teamStoreGetUsername } from '../stores/team-store.js'
 	import { dateToDatestring } from '../helpers/helpers.js'
 
 	
@@ -63,7 +65,7 @@
 	{/if}
 
 	<a href="/{$routerStore.team}/settings/-/" class="settings">
-		Settings
+		{teamStoreGetUsername($authStore.user ? $authStore.user.id : 0, $membersStore)}
 	</a>
 </nav>
 <div class="spacer bp-{$uiStore.breakpoint}"></div>

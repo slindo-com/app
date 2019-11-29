@@ -83,6 +83,16 @@ export function teamStoreGetUser(id) {
 }
 
 
+export function teamStoreGetUsername(id) {
+	const membersData = get(membersStore)
+
+	return membersData[id] 
+		? membersData[id].firstname +' '+ membersData[id].lastname 
+		: 'Without Name'
+
+}
+
+
 export function teamStoreChangeTitle(id, title) {
 	sws.auth.setTeamTitle({
 		id,

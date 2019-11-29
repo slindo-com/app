@@ -1,7 +1,7 @@
 <script>
 	import { fade } from 'svelte/transition'
 	import { routerStore } from '../stores/router-store.js'
-	import { teamStore, membersStore, teamStoreInvite } from '../stores/team-store.js'
+	import { teamStore, membersStore, teamStoreInvite, teamStoreGetUsername } from '../stores/team-store.js'
 	
 	import UiInput from '../ui/ui-input.svelte'
 	import UiButton from '../ui/ui-button.svelte'
@@ -92,9 +92,7 @@
 			<a
 				href="/{$routerStore.team}/{$routerStore.view}/{$routerStore.project}/{$routerStore.subview}/{user.id}/"
 				class="entry border-bottom">
-				{$membersStore[user.id] 
-					? $membersStore[user.id].firstname +' '+ $membersStore[user.id].lastname 
-					: 'Without Name'}
+				{teamStoreGetUsername(user.id, $membersStore)}
 			</a>
 		{/each}
 
