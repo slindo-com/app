@@ -8,7 +8,7 @@
 
 
 	function click(routerStore) {
-		Page(`/${routerStore.team}/${routerStore.view}/${routerStore.project}/${routerStore.subview != '-' ? routerStore.subview + '/' : ''}`)
+		Page(`/${routerStore.project}/${routerStore.view}/${routerStore.subview != '-' ? routerStore.subview + '/' : ''}`)
 	}
 </script>
 

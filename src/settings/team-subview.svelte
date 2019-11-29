@@ -90,7 +90,7 @@
 	{#if $teamStore.active}
 		{#each $teamStore.active.users as user}
 			<a
-				href="/{$routerStore.team}/{$routerStore.view}/{$routerStore.project}/{$routerStore.subview}/{user.id}/"
+				href="/{$routerStore.project}/{$routerStore.view}/{$routerStore.subview}/{user.id}/"
 				class="entry border-bottom">
 				{teamStoreGetUsername(user.id, $membersStore)}
 			</a>

@@ -14,53 +14,48 @@ Page({
 	hashbang: true
 })
 
-Page('/', () => Page('/-/tasks/SLI/'))
+Page('/', () => Page('/SLI/tasks/'))
 
-Page('/:team/', data => 
+Page('/', data => 
 	routerStore.set({
-		team: data.params.team,
-		view: data.params.view,
 		project: data.params.project,
+		view: data.params.view,
 		subview: data.params.subview,
 		detail: data.params.detail
 	})
 )
 
-Page('/:team/:view/', data => 
+Page('/:project/', data => 
 	routerStore.set({
-		team: data.params.team,
-		view: data.params.view,
 		project: data.params.project,
+		view: data.params.view,
 		subview: data.params.subview,
 		detail: data.params.detail
 	})
 )
 
-Page('/:team/:view/:project/', data => 
+Page('/:project/:view/', data => 
 	routerStore.set({
-		team: data.params.team,
-		view: data.params.view,
 		project: data.params.project,
+		view: data.params.view,
 		subview: data.params.subview || '-',
 		detail: data.params.detail
 	})
 )
 
-Page('/:team/:view/:project/:subview/', data =>
+Page('/:project/:view/:subview/', data =>
 	routerStore.set({
-		team: data.params.team,
-		view: data.params.view,
 		project: data.params.project,
+		view: data.params.view,
 		subview: data.params.subview,
 		detail: data.params.detail
 	})
 )
 
-Page('/:team/:view/:project/:subview/:detail/', data =>
+Page('/:project/:view/:subview/:detail/', data =>
 	routerStore.set({
-		team: data.params.team,
-		view: data.params.view,
 		project: data.params.project,
+		view: data.params.view,
 		subview: data.params.subview,
 		detail: data.params.detail
 	})

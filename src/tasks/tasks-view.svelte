@@ -44,7 +44,7 @@
 
 	{#each $tasksStore.tasks as task}
 		<a
-			href="/{$routerStore.team}/{$routerStore.view}/{$routerStore.project}/{$routerStore.subview}/{task.id}/"
+			href="/{$routerStore.project}/{$routerStore.view}/{$routerStore.subview}/{task.id}/"
 			class="entry border-bottom">
 				
 			<strong>

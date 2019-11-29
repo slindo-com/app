@@ -33,7 +33,7 @@
 
 	function getLink(routerStore, slug) {
 
-		return `/${routerStore.team}/${routerStore.view}/${routerStore.project}/${slug != '-' ? slug + '/' : ''}`
+		return `/${routerStore.project}/${routerStore.view}/${slug != '-' ? slug + '/' : ''}`
 	}
 
 </script>
@@ -64,7 +64,7 @@
 			'width:' + (activeElWidth - 18) +'px;'}"></div>
 	{/if}
 
-	<a href="/{$routerStore.team}/settings/-/" class="settings">
+	<a href="/-/settings/" class="settings">
 		{teamStoreGetUsername($authStore.user ? $authStore.user.id : 0, $membersStore)}
 	</a>
 </nav>
