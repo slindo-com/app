@@ -6,6 +6,8 @@
 	import { membersStore, teamStoreGetUsername } from '../stores/team-store.js'
 	import { dateToDatestring } from '../helpers/helpers.js'
 
+	import UiProjectSelect from '../ui/ui-project-select.svelte'
+
 	
 	export let links = []
 
@@ -39,6 +41,11 @@
 </script>
 
 <nav class="border-bottom bp-{$uiStore.breakpoint}">
+
+	<div class="project-select-wrapper">
+		<UiProjectSelect on:recalculateActiveState={e => activeEl = activeEl} />
+	</div>
+
 	<ul>
 		{#each links as link}
 			<li>
@@ -81,11 +88,17 @@
 		background:#FAFAFA;
 		text-align: left;
 		z-index:500;
+		display:flex;
+		flex:row;
 	}
 
 	nav.bp-xs {
 		top:auto;
 		bottom:0;
+	}
+
+	.project-select-wrapper {
+		padding:6px 6px 6px 36px;
 	}
 
 	/*nav:after {
@@ -113,9 +126,10 @@
 
 	ul {
 		display: inline-block;
-		margin:0 0 0 27px;
+		margin:0 0 0 6px;
 		padding:0;
 		list-style: none;
+		flex-grow: 1;
 	}
 
 	li {

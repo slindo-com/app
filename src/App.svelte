@@ -175,12 +175,14 @@ const COLORS = [
 
 {#if !resizing}
 
+{JSON.stringify($routerStore)}
+
 	{#if $routerStore.view === 'account'}
 		<AccountView />
 	{:else if $authStore.inited && !$authStore.hasAuth}
-		{#if $routerStore.view === 'sign-up'}
+		{#if $routerStore.project === 'sign-up'}
 			<SignUp />
-		{:else if $routerStore.view === 'new-password'}
+		{:else if $routerStore.project === 'new-password'}
 			<NewPasswordView />
 		{:else}
 			<SignIn />

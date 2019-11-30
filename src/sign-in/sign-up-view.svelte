@@ -17,11 +17,10 @@
 		code = ''
 
 	onMount(() => {
-		const routerStoreData = get(routerStore)
+		const routerData = get(routerStore)
 
-		const url = new URL(window.location.href),
-			urlEmail = url.searchParams.get('email'),
-			urlCode = url.searchParams.get('code')
+		const urlEmail = routerData.view,
+			urlCode = routerData.subview
 
 		if(urlEmail && urlCode) {
 			// TODO: Why is UiInput not reactive without setTimeout?
@@ -35,6 +34,7 @@
 	})
 
 	function signUp() {
+		email = email.replace(' ', '+')
 		authSignUp(email, password, code).then(res => {
 			authSignIn(email, password)
 				.then(() => Page('/'))
@@ -70,7 +70,7 @@
 
 	{#if isInvitation}
 		<p>
-			You followed an invitation email to slindo.com. Please set a passwort below, and you'll be added directly to the team.
+			You followed an invitation email to slindo. Please set a passwort below, and you'll be added directly to the team.
 		</p>
 	{/if}
 

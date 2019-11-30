@@ -70,4 +70,13 @@ Page('/sign-up/:key/:email/', data => {
 })
 
 
+Page('/sign-up/', data => {
+	routerStore.set({
+		view: 'sign-up',
+		key: null,
+		email: null
+	})
+})
+
+
 Page()

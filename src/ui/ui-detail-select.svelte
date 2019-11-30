@@ -159,7 +159,6 @@ button p {
 	max-width:100%;
 	margin:0;
 	border:0;
-	padding:18px;
 	line-height:24px;
 	font-size:14px;
 	font-weight:500;

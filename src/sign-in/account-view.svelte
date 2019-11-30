@@ -44,7 +44,7 @@
 
 	{#if subview === 'resetPassword'}
 		<h2>
-			Set password for Timetracker.One
+			Set password for Slindo
 		</h2>
 		{#if error && error.length > 0}
 			<p>
