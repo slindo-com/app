@@ -7,6 +7,7 @@
 	import { dateToDatestring } from '../helpers/helpers.js'
 
 	import UiProjectSelect from '../ui/ui-project-select.svelte'
+	import UiToolSelect from '../ui/ui-tool-select.svelte'
 
 	
 	export let links = []
@@ -44,6 +45,9 @@
 
 	<div class="project-select-wrapper">
 		<UiProjectSelect on:recalculateActiveState={e => activeEl = activeEl} />
+	</div>
+	<div class="tool-select-wrapper">
+		<UiToolSelect on:recalculateActiveState={e => activeEl = activeEl} />
 	</div>
 
 	<ul>
@@ -99,6 +103,10 @@
 
 	.project-select-wrapper {
 		padding:6px 6px 6px 36px;
+	}
+
+	.tool-select-wrapper {
+		padding:6px 6px 6px 0;
 	}
 
 	/*nav:after {

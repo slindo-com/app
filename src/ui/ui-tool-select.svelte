@@ -4,12 +4,24 @@
 	import { routerStore } from '../stores/router-store.js'
 	import { projectsStore } from '../stores/projects-store.js'
 
-	const dispatch = createEventDispatcher()
+	const dispatch = createEventDispatcher(),
+
+		TOOLS = [{
+			title: 'Tasks',
+			slug: 'tasks'
+		}, {
+			title: 'Times',
+			slug: 'times'
+		}]
+
 
 	let el,
 		focused = false,
 		opened = false
 
+
+	$: titleElement = TOOLS.find(val => $routerStore.view === val.slug)
+	$: title = titleElement ? titleElement.title : 'Settings'
 
 	onMount(() => {
 
@@ -28,7 +40,7 @@
 		class="{focused ? 'focused' : ''}"
 		on:click={e => opened = true}>
 		<p>
-			{$projectsStore.active ? $projectsStore.active.title : 'Choose Project'}
+			{title}
 		</p>
 	</button>
 
@@ -36,10 +48,10 @@
 		<div class="overlay">
 			<div class="options border-top">
 				<ul>
-					{#each $projectsStore.projects as project}
+					{#each TOOLS as tool}
 						<li>
-							<a href="/{project.code}/{$routerStore.view}/{$routerStore.subview}/{$routerStore.detail ? $routerStore.detail +'/' : ''}" on:click={e => opened = false}>
-								{project.title}
+							<a href="/{$routerStore.project}/{tool.slug}/{$routerStore.subview}/" on:click={e => opened = false}>
+								{tool.title}
 							</a>
 						</li>
 					{/each}
