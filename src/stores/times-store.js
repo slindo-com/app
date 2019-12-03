@@ -69,7 +69,7 @@ function setListener(teamId, projectId, day) {
 		})
 
 		sws.db.hook({
-			hook: 'timesStore',
+			hook: 'timesStore-'+day,
 			col: 'times',
 			query,
 			fn: obj => {
@@ -112,6 +112,11 @@ function setListener(teamId, projectId, day) {
 }
 
 
+export function timesStoreObserveNewDay(day) {
+	setListener(teamId, projectId, dateToDatabaseDate(day))
+}
+
+
 function setDetailTime() {
 	const { times } = get(timesStore)
 
@@ -124,7 +129,7 @@ function setDetailTime() {
 }
 
 
-export async function timesStoreNewTime(project) {
+export async function timesStoreNewTime(project, dayForNewTime) {
 
 	const { user } = get(authStore)
 
@@ -134,7 +139,7 @@ export async function timesStoreNewTime(project) {
 			user: user.id,
 			team: teamId,
 			project,
-			day
+			day: dateToDatabaseDate(dayForNewTime)
 		}
 	})
 }
