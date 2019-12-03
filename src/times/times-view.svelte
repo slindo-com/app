@@ -16,7 +16,7 @@
 	import UiDetailSection from '../ui/ui-detail-section.svelte'
 
 	import TimesDay from '../times/times-day.svelte'
-	// import TasksDetail from '../times/times-details.svelte'
+	import TimesDetail from '../times/times-details.svelte'
 
 	const LINKS = [{
 		title: 'My Times',
@@ -98,7 +98,7 @@
 </UiViewSection>
 <UiDetailSection>
 	{#if $timesStore.detailTime}
-		TIME
+		<TimesDetail />
 	{/if}
 </UiDetailSection>
 

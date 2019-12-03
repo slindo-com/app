@@ -44,8 +44,8 @@
 					{time.task ? 'Some Task' : 'No Task'}
 				</div>
 
-				<div class="comment empty">
-					No comment
+				<div class="comment {time.comment && time.comment.length > 0 ? '' : 'empty'}">
+					{time.comment && time.comment.length > 0 ? time.comment : 'No Comment'}
 				</div>
 			</a>
 		{/each}

@@ -36,7 +36,7 @@ export function timesStoreInit() {
 	})
 
 	routerStore.subscribe(routerData => {
-		if(routerData.view === 'tasks' && routerData.detail && routerData.detail != detailId) {
+		if(routerData.view === 'times' && routerData.detail && routerData.detail != detailId) {
 			detailId = routerData.detail
 			setDetailTime()
 		}
@@ -121,6 +121,8 @@ function setDetailTime() {
 	const { times } = get(timesStore)
 
 	const detailTime = times[detailId]
+
+	console.log('DETAILS', detailId, times)
 
 	timesStore.update(data => {
 		data.detailTime = detailTime
