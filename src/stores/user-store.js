@@ -1,7 +1,7 @@
 import { writable, get } from 'svelte/store';
 import { routerStore } from '../stores/router-store.js'
 import { authStore } from '../stores/auth-store.js'
-import { timesStoreChangeDuration } from '../stores/times-store.js'
+// import { timesStoreChangeDuration } from '../stores/times-store.js'
 import { sws } from '../helpers/sws-client.js'
 
 
@@ -84,7 +84,7 @@ export function userSetStopwatch(id, startTime) {
 
 	userStore.update(data => {
 		if(data.stopwatchEntryId) {
-			timesStoreChangeDuration(data.stopwatchEntryId, (Math.floor((Date.now()  - data.stopwatchStartTime) / 1000)))
+			//timesStoreChangeDuration(data.stopwatchEntryId, (Math.floor((Date.now()  - data.stopwatchStartTime) / 1000)))
 		}
 		
 		if(data.stopwatchEntryId != id || !data.stopwatchEntryId) {

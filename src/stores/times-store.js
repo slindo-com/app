@@ -2,77 +2,92 @@ import { writable, get } from 'svelte/store'
 import { routerStore } from '../stores/router-store.js'
 import { authStore } from '../stores/auth-store.js'
 import { teamStore } from '../stores/team-store.js'
+import { projectsStore } from '../stores/projects-store.js'
 import { sws } from '../helpers/sws-client.js'
 import { dateToDatabaseDate, dateStringToDate } from '../helpers/helpers.js'
 
 export const timesStore = writable({
-	times: [],
-	dayIndex: {}
+	dates: {},
+	times: {},
+	detailTime: null
 })
 
 
 let listener,
-	monthListener = {},
-	teamId = null
+	day = dateToDatabaseDate(new Date()),
+	teamId = null,
+	projectId = null,
+	detailId = null
 
 
 export function timesStoreInit() {
-	routerStore.subscribe(routerData => {
-		try {
-			let dbDate = dateToDatabaseDate(dateStringToDate(routerData.subview))
-			if(dbDate) {
-				setListener(dbDate, teamId)
-			}
-		} catch(err) {}
+	teamStore.subscribe(teamData => {
+		if(teamData.active && teamData.active.id != teamId) {
+			teamId = teamData.active.id
+			setListener(teamId, projectId, day)
+		}
 	})
 
-	teamStore.subscribe(teamData => {
-		const routerData = get(routerStore)
-		try {
-			let dbDate = dateToDatabaseDate(dateStringToDate(routerData.subview))
-			if(dbDate && teamData.active && teamData.active.id != teamId) {
-				teamId = teamData.active.id
-				setListener(dbDate, teamId)
-			}
-		} catch(err) {}		
+	projectsStore.subscribe(projectsData => {
+		if(projectsData.active && projectsData.active.id != projectId) {
+			projectId = projectsData.active.id
+			setListener(teamId, projectId, day)
+		}
 	})
+
+	routerStore.subscribe(routerData => {
+		if(routerData.view === 'tasks' && routerData.detail && routerData.detail != detailId) {
+			detailId = routerData.detail
+			setDetailTime()
+		}
+	})
+
+	// TODO: Project Times
 }
 
 
-function setListener(dbDate, teamId) {
-
-	const authData = get(authStore)
+function setListener(teamId, projectId, day) {
 
 	if(teamId) {
 
+		let query = {
+			team: teamId,
+			day
+		}
+
 		sws.db.query({
 			col: 'times',
-			query: {
-				day: dbDate,
-				team: teamId
-			}
+			query
 		}).then(res => {
 			timesStore.update(data => {
-				data.times = res.filter(entry => entry.user === authData.user.id)
+				data.dates[day] = res
+				res.forEach(val => data.times[val.id] = val)
 				return data
 			})
+
+			setDetailTime()
 		})
 
 		sws.db.hook({
-			hook: 'times',
+			hook: 'timesStore',
 			col: 'times',
-			query: {
-				day: dbDate,
-				team: teamId
-			},
+			query,
 			fn: obj => {
 				timesStore.update(data => {
 
 					if(obj.__deleted) {
-						data.times = data.times.filter(val => val.id != obj.id)
+						delete data.times[obj.id]
+						if(data.dates[day]) {
+							data.dates[day] = data.dates[date].filter(val => val.id != obj.id)
+						}
 					} else {
+
+						if(!data.dates[day]) {
+							data.dates[day] = []
+						}
+
 						let found = false
-						data.times = data.times.map(val => {
+						data.dates[day] = data.dates[day].map(val => {
 							if(val.id === obj.id) {
 								found = true
 								return obj
@@ -81,9 +96,13 @@ function setListener(dbDate, teamId) {
 						})
 
 						if(!found) {
-							data.times.push(obj)
+							data.dates[day].push(obj)
 						}
+
+						data.times[obj.id] = obj
 					}
+
+					setDetailTime()
 
 					return data
 				})
@@ -93,73 +112,39 @@ function setListener(dbDate, teamId) {
 }
 
 
-export function timesStoreNewTime(day, cb) {
+function setDetailTime() {
+	const { times } = get(timesStore)
+
+	const detailTime = times[detailId]
+
+	timesStore.update(data => {
+		data.detailTime = detailTime
+		return data
+	})
+}
+
+
+export async function timesStoreNewTime(project) {
 
 	const { user } = get(authStore)
 
-	sws.db.new({
+	return sws.db.new({
 		col: 'times',
 		data: {
 			user: user.id,
 			team: teamId,
-			day: day,
+			project,
+			day
 		}
-	}).then(() => {
-		cb(true)
-	}).catch(err => {
-		cb(false)
 	})
 }
 
 
-export function timesStoreGetEntry(id, cb) {
-	sws.db.get({
-		col: 'times',
-		id
-	}).then(obj => {
-		cb(obj)
-	}).catch(err => {
-		cb(null)
-	})
-}
-
-
-export function timesStoreChangeComment(id, comment) {
+export function timesStoreChangeAttributes(id, data) {
 	sws.db.update({
 		col: 'times',
 		id,
-		data: {
-			comment
-		}
+		data
 	})
 }
 
-
-export function timesStoreChangeDuration(id, duration) {
-	sws.db.update({
-		col: 'times',
-		id,
-		data: {
-			duration
-		}
-	})
-}
-
-
-export function timesStoreChangeTask(id, task) {
-	sws.db.update({
-		col: 'times',
-		id,
-		data: {
-			task
-		}
-	})
-}
-
-
-export function timesStoreDeleteEntry(id) {
-	sws.db.delete({
-		col: 'times',
-		id
-	})
-}

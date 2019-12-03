@@ -1,4 +1,4 @@
-import { timesStoreDeleteEntry } from '../stores/times-store.js'
+// import { timesStoreDeleteEntry } from '../stores/times-store.js'
 
 const TO_MAIN_NAV = [
 	['parent', 'body'],
@@ -28,7 +28,7 @@ const TO_PARENT_LI = [
 ]
 
 const DELETE_TIMELOG_ENTRY = e => {
-	timesStoreDeleteEntry(e.target.closest('li').dataset.id)
+	//timesStoreDeleteEntry(e.target.closest('li').dataset.id)
 }
 
 export const KEYS_CONFIG = {
@@ -123,7 +123,7 @@ export const KEYS_CONFIG = {
 		],
 		'esc': TO_MAIN_NAV,
 		'backspace': e => {
-			timesStoreDeleteEntry(e.target.dataset.id)
+			// timesStoreDeleteEntry(e.target.dataset.id)
 		}
 	},
 

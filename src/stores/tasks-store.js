@@ -2,6 +2,7 @@ import { writable, get } from 'svelte/store'
 import { routerStore } from '../stores/router-store.js'
 import { authStore } from '../stores/auth-store.js'
 import { teamStore } from '../stores/team-store.js'
+import { projectsStore } from '../stores/projects-store.js'
 import { sws } from '../helpers/sws-client.js'
 import { dateToDatabaseDate, dateStringToDate } from '../helpers/helpers.js'
 
@@ -13,6 +14,7 @@ export const tasksStore = writable({
 
 let listener,
 	teamId = null,
+	projectId = null,
 	detailId = null
 
 
@@ -20,7 +22,14 @@ export function tasksStoreInit() {
 	teamStore.subscribe(teamData => {
 		if(teamData.active && teamData.active.id != teamId) {
 			teamId = teamData.active.id
-			setListener(teamId)
+			setListener(teamId, projectId)
+		}
+	})
+
+	projectsStore.subscribe(projectsData => {
+		if(projectsData.active && projectsData.active.id != projectId) {
+			projectId = projectsData.active.id
+			setListener(teamId, projectId)
 		}
 	})
 
@@ -35,14 +44,21 @@ export function tasksStoreInit() {
 }
 
 
-function setListener(teamId) {
+function setListener(teamId, projectId) {
 
 	if(teamId) {
+
+		let query = {
+			team: teamId
+		}
+
+		if(projectId) {
+			query.project = projectId
+		}
+
 		sws.db.query({
 			col: 'tasks',
-			query: {
-				team: teamId
-			}
+			query
 		}).then(res => {
 			tasksStore.update(data => {
 				data.tasks = res
@@ -55,9 +71,7 @@ function setListener(teamId) {
 		sws.db.hook({
 			hook: 'tasksStore',
 			col: 'tasks',
-			query: {
-				team: teamId
-			},
+			query,
 			fn: obj => {
 				tasksStore.update(data => {
 
