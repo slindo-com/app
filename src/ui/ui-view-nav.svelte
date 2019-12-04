@@ -24,7 +24,7 @@
 
 	$: activeEl = ELEMENTS_MAP[$routerStore.subview] || ELEMENTS_MAP.timelog
 
-	$: activeElOffset = activeEl ? activeEl.getBoundingClientRect().left : 0
+	$: activeElOffset = activeEl ? activeEl.getBoundingClientRect().left - 240 : 0
 	$: activeElWidth = activeEl ? activeEl.getBoundingClientRect().width : 0
 
 
@@ -41,12 +41,12 @@
 
 </script>
 
-<nav class="border-bottom bp-{$uiStore.breakpoint}">
+<nav class="bp-{$uiStore.breakpoint}">
 
-	<div class="project-select-wrapper">
+	<!--<div class="project-select-wrapper">
 		<UiProjectSelect on:recalculateActiveState={e => activeEl = activeEl} />
 	</div>
-	<!--<div class="tool-select-wrapper">
+	<div class="tool-select-wrapper">
 		<UiToolSelect on:recalculateActiveState={e => activeEl = activeEl} />
 	</div>-->
 
@@ -84,6 +84,7 @@
 
 <style>
 	nav {
+		position: relative;
 		width:100%;
 		height:48px;
 		background:#FAFAFA;
@@ -94,7 +95,7 @@
 	}
 
 	.project-select-wrapper {
-		padding:6px 6px 6px 36px;
+		padding:6px 6px 6px 24px;
 	}
 
 	.tool-select-wrapper {
@@ -126,7 +127,7 @@
 
 	ul {
 		display: inline-block;
-		margin:0 0 0 6px;
+		margin:0 0 0 18px;
 		padding:0;
 		list-style: none;
 		flex-grow: 1;
@@ -183,7 +184,7 @@
 
 	.settings {
 		float:right;
-		padding:0 36px;
+		padding:0 24px;
 		line-height: 48px;
 	}
 </style>

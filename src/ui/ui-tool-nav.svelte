@@ -67,7 +67,7 @@
 
 	ul {
 		display: inline-block;
-		margin:0 0 0 36px;
+		margin:0 0 0 24px;
 		padding:0;
 		list-style: none;
 		flex-grow: 1;

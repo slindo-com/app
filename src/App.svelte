@@ -15,6 +15,7 @@
 
 	import UiFocus from './ui/ui-focus.svelte'
 	import UiToolNav from './ui/ui-tool-nav.svelte'
+	import UiProjectNav from './ui/ui-project-nav.svelte'
 
 	import SignUp from './sign-in/sign-up-view.svelte'
 	import SignIn from './sign-in/sign-in-view.svelte'
@@ -187,8 +188,11 @@ const COLORS = [
 			<SignIn />
 		{/if}
 	{:else}
-		<UiToolNav />
-		<svelte:component this={VIEWS[$routerStore.view]}/>
+		<UiProjectNav />
+		<div class="view">
+			<UiToolNav />
+			<svelte:component this={VIEWS[$routerStore.view]}/>
+		</div>
 	{/if}
 
 {/if}
@@ -196,3 +200,13 @@ const COLORS = [
 <!-- <UiFocus /> -->
 
 <svelte:window on:resize={e => resize()} />
+
+
+<style>
+	.view {
+		position: relative;
+		float:left;
+		width:calc(100% - 240px);
+		height:100%;
+	}
+</style>

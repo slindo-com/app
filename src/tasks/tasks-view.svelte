@@ -65,7 +65,7 @@
 <style>
 
 	header {
-		margin:18px 36px 0 36px;
+		margin:18px 24px 0 24px;
 		padding:0 0 18px 0;
 		display:flex;
 		flex:row wrap;
@@ -79,7 +79,7 @@
 
 	.entry {
 		display:block;
-		margin:0 36px;
+		margin:0 24px;
 		line-height: 48px;
 		font-size:14px;
 		color:var(--c-font);
