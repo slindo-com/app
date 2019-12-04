@@ -23,11 +23,11 @@
 			{dateGetHumanDate(day)}
 		</h3>
 
-		<div class="button-wrapper">
+		<!--<div class="button-wrapper">
 			<UiButton
 				label="New Time"
 				on:click={e => timesStoreNewTime($projectsStore.active ? $projectsStore.active.id : null, day)} />
-		</div>
+		</div>-->
 	</header>
 
 	{#if $timesStore.dates[dateToDatabaseDate(day)]}
@@ -56,11 +56,19 @@
 
 <style>
 
+	.wrapper {
+		padding: 0 0 24px 0;
+	}
+
 	header {
-		margin:18px 36px 0 36px;
-		padding:0 0 18px 0;
+		background:#FFF;
+		position: sticky;
+		top:0;
+		margin:0 24px;
+		padding: 0;
 		display:flex;
 		flex:row wrap;
+		z-index:100;
 	}
 
 	h3 {
@@ -71,7 +79,7 @@
 
 	.entry {
 		display:flex;
-		margin:0 36px;
+		margin:0 24px;
 		line-height: 48px;
 		font-size:14px;
 		color:var(--c-font);

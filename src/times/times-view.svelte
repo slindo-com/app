@@ -37,6 +37,7 @@
 
 	onMount(() => {
 		timesStoreObserveNewDay(dayNow)
+		// moreDates()
 	})
 
 
@@ -82,6 +83,8 @@
 		</div>
 	</header>-->
 
+	<div style="height:36px"></div>
+
 	{#each days as day}
 		<TimesDay day={day} />
 	{/each}
@@ -105,7 +108,7 @@
 <style>
 
 	header {
-		margin:18px 36px 0 36px;
+		margin:18px 24px 0 24px;
 		padding:0 0 18px 0;
 		display:flex;
 		flex:row wrap;
@@ -118,7 +121,7 @@
 	}
 
 	a {
-		margin:36px;
+		margin:0 24px;
 		display:block;
 	}
 
