@@ -21,7 +21,7 @@
 <style>
 	section {
 		width:100%;
-		height: calc(100% - 48px);
+		height: calc(100% - 48px - 48px);
 		overflow-x: hidden;
 		overflow-y: auto;
 		transition: width 100ms ease;

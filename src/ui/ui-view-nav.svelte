@@ -46,9 +46,9 @@
 	<div class="project-select-wrapper">
 		<UiProjectSelect on:recalculateActiveState={e => activeEl = activeEl} />
 	</div>
-	<div class="tool-select-wrapper">
+	<!--<div class="tool-select-wrapper">
 		<UiToolSelect on:recalculateActiveState={e => activeEl = activeEl} />
-	</div>
+	</div>-->
 
 	<ul>
 		{#each links as link}
@@ -79,26 +79,18 @@
 		{teamStoreGetUsername($authStore.user ? $authStore.user.id : 0, $membersStore)}
 	</a>
 </nav>
-<div class="spacer bp-{$uiStore.breakpoint}"></div>
+<!--<div class="spacer bp-{$uiStore.breakpoint}"></div>-->
 	
 
 <style>
 	nav {
 		width:100%;
 		height:48px;
-		position: fixed;
-		top:0;
-		left:0;
 		background:#FAFAFA;
 		text-align: left;
 		z-index:500;
 		display:flex;
 		flex:row;
-	}
-
-	nav.bp-xs {
-		top:auto;
-		bottom:0;
 	}
 
 	.project-select-wrapper {

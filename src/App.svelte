@@ -14,6 +14,7 @@
 	import { sws } from './helpers/sws-client.js'
 
 	import UiFocus from './ui/ui-focus.svelte'
+	import UiToolNav from './ui/ui-tool-nav.svelte'
 
 	import SignUp from './sign-in/sign-up-view.svelte'
 	import SignIn from './sign-in/sign-in-view.svelte'
@@ -175,8 +176,6 @@ const COLORS = [
 
 {#if !resizing}
 
-{JSON.stringify($routerStore)}
-
 	{#if $routerStore.view === 'account'}
 		<AccountView />
 	{:else if $authStore.inited && !$authStore.hasAuth}
@@ -188,6 +187,7 @@ const COLORS = [
 			<SignIn />
 		{/if}
 	{:else}
+		<UiToolNav />
 		<svelte:component this={VIEWS[$routerStore.view]}/>
 	{/if}
 

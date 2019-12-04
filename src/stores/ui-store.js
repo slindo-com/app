@@ -6,7 +6,7 @@ import { userStore, userStopwatchStore } from '../stores/user-store.js'
 
 const TITLE_MAP = {
 	'tasks': 'Tasks',
-	'timelog': 'Timelog',
+	'times': 'Times',
 	'reports': 'Reports',
 	'settings': 'Settings'
 }

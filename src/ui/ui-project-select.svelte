@@ -94,15 +94,15 @@ button p {
 	line-height:24px;
 	font-size:14px;
 	font-weight:500;
-	background:var(--c-blue);
+	background:rgba(0, 0, 0, .05);
 	border-radius:var(--border-radius);
 	box-shadow:none;
-	caret-color:#FFF;
+	caret-color:var(--c-font);
 	outline-style:solid;
 	outline-color:rgba(0, 0, 255, .25);
 	outline-width:0;
 	outline-offset:2px;
-	color:#FFF;
+	color:var(--c-font);
 	transition: all 100ms ease;
 	cursor:pointer;
 	padding:6px 12px 6px 12px;
@@ -110,6 +110,7 @@ button p {
 
 button p:hover {
 	background:var(--c-font);
+	color:#FFF;
 }
 
 .overlay {
