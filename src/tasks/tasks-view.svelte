@@ -48,7 +48,7 @@
 			class="entry border-bottom">
 				
 			<strong>
-				SLI-{task.number}
+				{$projectsStore.projectsJson[task.project] ? $projectsStore.projectsJson[task.project].code : 'PRO'}-{task.number ? task.number : 'XX'}
 			</strong>
 
 			{task.title ? task.title : 'No task summary'}

@@ -5,6 +5,7 @@ import { teamStore } from '../stores/team-store.js'
 import { sws } from '../helpers/sws-client.js'
 
 export const projectsStore = writable({
+	projectsJson: {},
 	projects: [],
 	active: null
 })
@@ -46,6 +47,7 @@ function setListener(teamId) {
 		}).then(res => {
 			projectsStore.update(data => {
 				data.projects = res
+				res.forEach(val => data.projectsJson[val.id] = val)
 				return data
 			})
 
@@ -62,6 +64,7 @@ function setListener(teamId) {
 				projectsStore.update(data => {
 
 					if(obj.__deleted) {
+						delete data.projectsJson[obj.id]
 						data.projects = data.projects.filter(val => val.id != obj.id)
 					} else {
 						let found = false
@@ -76,6 +79,8 @@ function setListener(teamId) {
 						if(!found) {
 							data.projects.push(obj)
 						}
+
+						data.projectsJson[obj.id] = obj
 					}
 
 					return data
