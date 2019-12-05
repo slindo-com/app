@@ -48,7 +48,7 @@
 			class="entry border-bottom">
 				
 			<strong>
-				SLI-1
+				SLI-{task.number}
 			</strong>
 
 			{task.title ? task.title : 'No task summary'}
