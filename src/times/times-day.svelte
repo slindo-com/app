@@ -18,16 +18,13 @@
 
 <div class="wrapper">
 		
-	<header class="border-horizontal border-bottom">
+	<header class="border-horhizontal border-bottojm">
+		<button on:click={e => timesStoreNewTime($projectsStore.active ? $projectsStore.active.id : null, day)}>
+			+
+		</button>
 		<h3>
 			{dateGetHumanDate(day)}
 		</h3>
-
-		<!--<div class="button-wrapper">
-			<UiButton
-				label="New Time"
-				on:click={e => timesStoreNewTime($projectsStore.active ? $projectsStore.active.id : null, day)} />
-		</div>-->
 	</header>
 
 	{#if $timesStore.dates[dateToDatabaseDate(day)]}
@@ -57,7 +54,7 @@
 <style>
 
 	.wrapper {
-		padding: 0 0 24px 0;
+		padding: 0 0 60px 0;
 	}
 
 	header {
@@ -73,9 +70,57 @@
 
 	h3 {
 		margin:0;
-		line-height:42px;
-		flex:1;
+		line-height:48px;
 	}
+
+	button {
+		position: relative;
+		border:0;
+		border-radius: 0;
+		background:#FFF;
+		line-height: 36px;
+		padding:0 12px;
+		margin:6px 12px 0 0;
+		color:var(--c-blue);
+		text-align: center;
+		cursor: pointer;
+		border-radius: 4px;
+		width: 36px;
+		height:36px;
+		box-shadow: 0 -3px 0 #DDDAD5 inset, -2px 0 0 #F5F5F4 inset;
+
+	}
+
+	button:hover {
+		text-decoration: none;
+	}
+
+	button:after {
+	    content:'';
+	    display: block;
+	    position: absolute;
+	    top:0;
+	    left:0;
+	    width:100%;
+	    height:100%;
+	    border-radius:var(--border-radius);
+	    border:#CCC 1px solid;
+	    pointer-events: none;
+	    transition: all 100ms ease;
+	}
+
+	@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+	    button:after {
+	        width:200%;
+	        height:200%;
+	        border-radius:8px;
+	        border:#999 1px solid;
+	        transform: scale(.5);
+	        transform-origin: 0 0;
+	    }
+	}
+
+
 
 	.entry {
 		display:flex;

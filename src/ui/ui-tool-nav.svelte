@@ -58,11 +58,12 @@
 	nav {
 		width:100%;
 		height:48px;
-		background:#333;
+		background:var(--c-blue);
 		text-align: left;
 		z-index:500;
 		display:flex;
 		flex:row;
+		box-shadow: 0 0 0 240px rgba(0, 0, 0, .3) inset;
 	}
 
 	ul {

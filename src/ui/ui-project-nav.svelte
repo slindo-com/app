@@ -43,7 +43,7 @@
 }
 
 ul {
-	border-top:rgba(0, 0, 0, .1) 48px solid;
+	border-top:rgba(0, 0, 0, .15) 48px solid;
 	margin: 0;
 	padding:12px 0 0 0;
 	list-style: none;
