@@ -74,10 +74,6 @@
 			'left:' + (activeElOffset + 9) +'px;' + 
 			'width:' + (activeElWidth - 18) +'px;'}"></div>
 	{/if}
-
-	<a href="/-/settings/" class="settings">
-		{teamStoreGetUsername($authStore.user ? $authStore.user.id : 0, $membersStore)}
-	</a>
 </nav>
 <!--<div class="spacer bp-{$uiStore.breakpoint}"></div>-->
 	
@@ -180,11 +176,5 @@
 		z-index:100;
 		transition: all 100ms ease;
 		pointer-events: none;
-	}
-
-	.settings {
-		float:right;
-		padding:0 24px;
-		line-height: 48px;
 	}
 </style>

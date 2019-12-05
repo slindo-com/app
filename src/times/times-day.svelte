@@ -18,7 +18,7 @@
 
 <div class="wrapper">
 		
-	<header class="border-horhizontal border-bottojm">
+	<header>
 		<button on:click={e => timesStoreNewTime($projectsStore.active ? $projectsStore.active.id : null, day)}>
 			+
 		</button>
@@ -28,10 +28,10 @@
 	</header>
 
 	{#if $timesStore.dates[dateToDatabaseDate(day)]}
-		{#each $timesStore.dates[dateToDatabaseDate(day)] as time}
+		{#each $timesStore.dates[dateToDatabaseDate(day)] as time, index}
 			<a
 				href="/{$routerStore.project}/{$routerStore.view}/{$routerStore.subview}/{time.id}/"
-				class="entry border-bottom">
+				class="entry {index < $timesStore.dates[dateToDatabaseDate(day)].length - 1 ? 'border-bottom' : ''}">
 
 				<div class="duration">
 					{dateGetHours(time.duration)}:{dateGetMinutes(time.duration)}<small>{dateGetSeconds(time.duration)}</small>
@@ -69,8 +69,20 @@
 	}
 
 	h3 {
+		position: relative;
 		margin:0;
 		line-height:48px;
+	}
+
+	h3:after {
+		content:'';
+		position: absolute;
+		bottom:6px;
+		left:0;
+		width:240px;
+		height:1px;
+		background:var(--c-font);
+		transform:scaleY(.5);
 	}
 
 	button {

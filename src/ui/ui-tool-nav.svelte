@@ -51,6 +51,9 @@
 		{/each}
 	</ul>
 
+	<a href="/-/settings/" class="settings {$routerStore.view === 'settings' ? 'active' : ''}">
+		{teamStoreGetUsername($authStore.user ? $authStore.user.id : 0, $membersStore)}
+	</a>
 </nav>
 	
 
@@ -63,7 +66,6 @@
 		z-index:500;
 		display:flex;
 		flex:row;
-		box-shadow: 0 0 0 240px rgba(0, 0, 0, .3) inset;
 	}
 
 	ul {
@@ -103,5 +105,10 @@
 	.active {
 		background:#FAFAFA;
 		color:var(--c-font);
+	}
+
+	.settings {
+		float:right;
+		margin:12px 12px 0 12px;
 	}
 </style>

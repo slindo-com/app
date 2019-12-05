@@ -47,6 +47,8 @@ ul {
 	margin: 0;
 	padding:12px 0 0 0;
 	list-style: none;
+	box-shadow: 0 0 0 240px rgba(0, 0, 0, .3) inset;
+	height:100%;
 }
 
 li {
@@ -73,7 +75,7 @@ a {
 	transition: all 100ms ease;
 	margin:0 12px;
 	border-radius: var(--border-radius);
-	background:var(--c-blue);
+	background:transparent;
 }
 
 a:hover {
