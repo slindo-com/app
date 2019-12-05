@@ -8,6 +8,7 @@
 	import { userStoreInit } from './stores/user-store.js'
 	import { teamStore, teamStoreInit } from './stores/team-store.js'
 	import { projectsStoreInit } from './stores/projects-store.js'
+	import { messagesStoreInit } from './stores/messages-store.js'
 	import { reportsStoreInit } from './stores/reports-store.js'
 	import { uiStore, uiStoreInit, uiStoreSetBreakpoint } from './stores/ui-store.js'
 	import { getWindowWidth } from './helpers/helpers.js'
@@ -24,6 +25,7 @@
 
 	import TasksView from './tasks/tasks-view.svelte'
 	import TimesView from './times/times-view.svelte'
+	import ChatView from './chat/chat-view.svelte'
 	import SettingsView from './settings/settings-view.svelte'
 
 	let resizing = false,
@@ -32,6 +34,7 @@
 	const VIEWS = {
 		tasks: TasksView,
 		times: TimesView,
+		chat: ChatView,
 		settings: SettingsView
 	}
 
@@ -116,6 +119,21 @@ const MODELS = {
 			['team', 'project', 'user']
 		]
 	}, 
+	'messages': {
+		col: 'messages',
+		attributes: {
+			day: 20000000,
+			message: '',
+			project: null,
+			user: null,
+			team: null
+		},
+		indexes: [
+			['team'],
+			['team', 'project'],
+			['team', 'project', 'day']
+		]
+	}, 
 	'comments': {
 		col: 'comments',
 		attributes: {
@@ -152,6 +170,7 @@ const MODELS = {
 		projectsStoreInit()
 		reportsStoreInit()
 		commentsStoreInit()
+		messagesStoreInit()
 	})
 
 	function resize() {

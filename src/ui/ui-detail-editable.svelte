@@ -11,13 +11,15 @@
 	export let error = ''
 	export let transparent = false
 	export let isFilled = false
+	export let sendOnEnter = false
 
 	let el,
 		editorEl,
 		valueIntern = '',
 		html = '',
 		focused = false,
-		prefilled = false
+		prefilled = false,
+		shiftPressed = false
 
 	$: disabledVal = disabled ? 'disabled' : ''
 
@@ -61,13 +63,25 @@
 
 	function keydown(e) {
 
+		if(e.keyCode === 16) {
+			shiftPressed = true
+		}
+
+		if(sendOnEnter && !shiftPressed && e.keyCode === 13) {
+			dispatch('submit')
+		}
+
 		prefilled = false
 		error = ''
 		dispatch('keydown', e.keyCode)
 
-		setTimeout(() => {
-			isFilled = html.trim().length > 0
-		})
+		setTimeout(() => isFilled = html.trim().length > 0)
+	}
+
+	function keyup(e) {
+		if(e.keyCode === 16) {
+			shiftPressed = false
+		}
 	}
 
 	function paste(e) {
@@ -122,7 +136,8 @@
 <div 
 	bind:this={el}
 	class="wrapper {focused ? 'focused' : ''} {disabled ? 'disabled' : ''} {transparent ? 'transparent' : ''} {value.length > 0 || prefilled ? 'filled' : ''}"
-		on:keydown={e => keydown(e)}>
+		on:keydown={e => keydown(e)}
+		on:keyup={e => keyup(e)}>
 
 	<div
 		class="editable"
