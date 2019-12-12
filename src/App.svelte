@@ -26,6 +26,7 @@
 	import TasksView from './tasks/tasks-view.svelte'
 	import TimesView from './times/times-view.svelte'
 	import ChatView from './chat/chat-view.svelte'
+	import CalendarView from './calendar/calendar-view.svelte'
 	import SettingsView from './settings/settings-view.svelte'
 
 	let resizing = false,
@@ -35,6 +36,7 @@
 		tasks: TasksView,
 		times: TimesView,
 		chat: ChatView,
+		calendar: CalendarView,
 		settings: SettingsView
 	}
 
