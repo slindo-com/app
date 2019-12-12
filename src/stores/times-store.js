@@ -122,8 +122,6 @@ function setDetailTime() {
 
 	const detailTime = times[detailId]
 
-	console.log('DETAILS', detailId, times)
-
 	timesStore.update(data => {
 		data.detailTime = detailTime
 		return data
