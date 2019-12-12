@@ -24,7 +24,7 @@ export function messagesStoreInit() {
 			let oldDates
 			messagesStore.update(data => {
 				oldDates = Object.keys(data.dates)
-				console.log(oldDates)
+				//console.log(oldDates)
 				data.dates = {}
 				return data
 			})
@@ -42,7 +42,7 @@ export function messagesStoreInit() {
 			let oldDates
 			messagesStore.update(data => {
 				oldDates = Object.keys(data.dates)
-				console.log(oldDates)
+				//console.log('OLD DATES', oldDates)
 				data.dates = {}
 				return data
 			})
@@ -67,7 +67,7 @@ function setListener(teamId, projectId, day) {
 			day: parseInt(day)
 		}
 
-		console.log('QUERY', query)
+		//console.log('QUERY', query)
 
 		sws.db.query({
 			col: 'messages',

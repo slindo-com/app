@@ -7,27 +7,26 @@
 		messagesStore } from '../stores/messages-store.js'
 
 	export let day
+
+	$: messages = $messagesStore.dates[dateToDatabaseDate(day)]
 </script>
 
 
+{#if messages && messages.length > 0}
+	<div class="wrapper">
+			
+		<h3>
+			{dateGetHumanDate(day)}
+		</h3>
 
-<div class="wrapper">
-		
-	<h3>
-		{dateGetHumanDate(day)}
-		
-	</h3>
-	{#if $messagesStore.dates[dateToDatabaseDate(day)]}
-		{#each $messagesStore.dates[dateToDatabaseDate(day)] as message, index}
-		
+		{#each messages as message}
 			<div class="message">
 				{message.message}
 			</div>
-
 		{/each}
-	{/if}
 
-</div>
+	</div>
+{/if}
 
 
 <style>
