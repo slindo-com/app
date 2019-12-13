@@ -3,6 +3,7 @@
 	import { routerStore } from '../stores/router-store.js'
 
 	export let narrow = false
+	export let nonav = false
 
 	$: hasDetail = $routerStore.detail ? true : false
 
@@ -13,7 +14,7 @@
 </script>
 
 <section 
-	class="{narrow ? 'narrow' : ''} {hasDetail ? 'has-detail' : ''}"
+	class="{narrow ? 'narrow' : ''} {nonav ? 'no-nav' : ''} {hasDetail ? 'has-detail' : ''}"
 	on:click={e => click($routerStore)}>
 	<slot></slot>
 </section>
@@ -25,6 +26,10 @@
 		overflow-x: hidden;
 		overflow-y: auto;
 		transition: width 100ms ease;
+	}
+
+	.no-nav {
+		height: calc(100% - 48px);
 	}
 
 	.has-detail {

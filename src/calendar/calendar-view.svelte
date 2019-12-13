@@ -12,6 +12,8 @@
 		datePrevDate,
 		dateGetWeek } from '../helpers/helpers.js'
 
+	import UiViewSection from '../ui/ui-view-section.svelte'
+	import UiDetailSection from '../ui/ui-detail-section.svelte'
 	import CalendarWeek from '../calendar/calendar-week.svelte'
 
 
@@ -87,29 +89,48 @@
 
 
 </script>
-<div class="wrapper" style="--dayElHeight:{dayElHeight}px">
-	<div
-		class="test"
-		bind:this={testEl}
-		on:scroll={e => scroll(e)}>
-		<div class="inner">
-			{#each dayEls as weekId, index (weekId)}
-				<CalendarWeek
-					weekBase={weekBase}
-					weekHeight={dayElHeight}
-					weekId={weekId} />
-			{/each}
+<UiViewSection nonav>
+	<header>
+		<h3>
+			December, 2019
+		</h3>
+	</header>
+	<div class="wrapper" style="--dayElHeight:{dayElHeight}px">
+		<div
+			class="test"
+			bind:this={testEl}
+			on:scroll={e => scroll(e)}>
+			<div class="inner">
+				{#each dayEls as weekId, index (weekId)}
+					<CalendarWeek
+						weekBase={weekBase}
+						weekHeight={dayElHeight}
+						weekId={weekId} />
+				{/each}
+			</div>
 		</div>
 	</div>
-</div>
+</UiViewSection>
+<UiDetailSection nonav>
+	Detail
+</UiDetailSection>
 
 <svelte:window on:resize={e => resize()} />
 
 <style>
 
+	header {
+		height:78px;
+	}
+
+	h3 {
+		padding:27px 0;
+		margin:0 0 0 24px;
+	}
+
 	.wrapper {
 		position: relative;
-		height:calc(100% - 48px);
+		height:calc(100% - 78px);
 		display: flex;
 		flex-direction:column;
 		transform:translate3d(0, 0, 0);

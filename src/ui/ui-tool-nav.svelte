@@ -103,7 +103,7 @@
 	}
 
 	.active {
-		background:#FAFAFA;
+		background:#FFF;
 		color:var(--c-font);
 	}
 

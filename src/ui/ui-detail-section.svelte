@@ -2,12 +2,13 @@
 	import { routerStore } from '../stores/router-store.js'
 
 	export let wide = false
+	export let nonav = false
 
 	$: hasDetail = $routerStore.detail ? true : false
 </script>
 
 {#if hasDetail}
-	<section class="border-vertical {wide ? 'wide' : ''}">
+	<section class="border-vertical {wide ? 'wide' : ''} {nonav ? 'no-nav' : ''}">
 		<slot></slot>
 	</section>
 {/if}
@@ -25,6 +26,10 @@
 		border-radius: var(--border-radius);
 		border-top-left-radius:0;
 		border-bottom-left-radius:0;
+	}
+
+	.no-nav {
+		top:54px;
 	}
 
 	.wide {

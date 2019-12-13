@@ -1,10 +1,12 @@
 <script>
 	import { onMount, beforeUpdate, afterUpdate } from 'svelte'
 	import { get } from 'svelte/store'
+	import { routerStore } from '../stores/router-store.js'
 	import { 
 		datePrevDate,
 		dateNextDate,
-		dateGetWeek } from '../helpers/helpers.js'
+		dateGetWeek,
+		dateToDatabaseDate } from '../helpers/helpers.js'
 
 	export let weekBase
 	export let weekHeight
@@ -23,11 +25,11 @@
 	})
 
 </script>
-<div class="wrapper" style="--weekHeight:{weekHeight}px;--top:{weekHeight * weekId}px">
+<div class="wrapper border-bottom" style="--weekHeight:{weekHeight}px;--top:{weekHeight * weekId}px">
 	{#each days as day}
-		<div class="day">
+		<a href="/{$routerStore.project}/{$routerStore.view}/{$routerStore.subview}/{dateToDatabaseDate(day)}/" class="day border-vertical">
 			{day.getDate()}
-		</div>
+		</a>
 	{/each}
 </div>
 
@@ -40,7 +42,6 @@
 		width:calc(100% - 24px);
 		height:var(--dayElHeight);
 		scroll-snap-align: start;
-		border-bottom:#EEE 1px solid;
 		display:flex;
 		flex:row;
 	}
@@ -49,12 +50,18 @@
 		min-width: calc(100% / 7);
 		max-width: calc(100% / 7);
 		padding:12px;
-		border-right:#EEE 1px solid;
 		font-size:11.5px;
+		cursor:pointer;
+		color:var(--color-font);
 	}
 
-	.day:last-child {
-		border:0;
+	.day:first-child:after {
+		display:none;
+	}
+
+	.day:hover {
+		background:#FAFAFA;
+		text-decoration: none;
 	}
 
 
